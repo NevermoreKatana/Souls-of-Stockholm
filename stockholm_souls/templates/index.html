@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Красно-черный форум</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Дополнительные стили для красно-черных тона -->
+    <style>
+        body {
+            background-image: url("https://i.pinimg.com/1200x/a5/de/1f/a5de1f99457523ec9e163efbca8b2705.jpg");
+            background-attachment: fixed;
+            background-repeat: round;
+            background-color: #303030; /* Красный фон */
+            color: #848484; /* Черный текст */
+        }
+        .navbar {
+            background-color: #000000; /* Черный фон для навигационной панели */
+        }
+        .btn-primary:hover{
+             background-color: #0040ae;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Красно-черный форум</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Форумы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">Войти</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основное содержание страницы -->
+    <div class="container mt-4">
+        <h1>Добро пожаловать на красно-черный форум</h1>
+        <p>Здесь вы можете обсудить различные темы в красно-черных тонах.</p>
+    </div>
+
+    <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

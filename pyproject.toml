@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "sOs"
+version = "0.1.0"
+description = ""
+authors = ["NevermoreKatana <grenkachannel@hotmail.com>"]
+readme = "README.md"
+packages = [
+  { include = "stockholm_souls" },
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+Flask = "^2.3.3"
+gunicorn = "^20.1.0"
+flake8 = "^6.1.0"
+python-dotenv = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
