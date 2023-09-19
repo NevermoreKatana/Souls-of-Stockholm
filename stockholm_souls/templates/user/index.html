@@ -30,7 +30,15 @@
         </div>
     </nav>
 
-
+{% with messages = get_flashed_messages() %}
+    {% if messages[0] %}
+        {% if messages[0].login %}
+<div class="alert alert-danger" role="alert">{{ messages[0].login }}</div>
+            {% elif messages[0].passwd %}
+            <div class="alert alert-danger" role="alert">{{ messages[0].passwd }}</div>
+            {% endif %}
+    {% endif %}
+{% endwith %}
 	</head>
 	<body class="img js-fullheight" style="background-image: url(templates/main_bg.jpg);">
 	<section class="ftco-section">

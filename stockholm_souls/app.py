@@ -1,6 +1,7 @@
 import os
 import dotenv
-from flask import Flask, render_template, request, flash, redirect, jsonify
+from stockholm_souls.database.db import take_user_info
+from flask import Flask, render_template, request, flash, redirect, jsonify, flash
 
 dotenv.load_dotenv()
 
@@ -22,9 +23,18 @@ def login_form():
 def login_user():
     name = request.form['uname']
     passwd = request.form['passwd']
-    return render_template('/user/profile.html')
+    info = take_user_info(name, passwd)
+    if info:
+        flash(info)
+        return redirect('/login')
+    return 'успех'
 
 
 @app.route('/test', methods=['GET'])
 def test():
-    return 'INFO'
+    errors = {
+        'login': 'asdasd',
+        'password': '123',
+        'jopa': 'asdasda'
+    }
+    return errors
