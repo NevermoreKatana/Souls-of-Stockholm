@@ -1,7 +1,7 @@
 import os
 import dotenv
-from stockholm_souls.database.db import take_user_info
-from flask import Flask, render_template, request, flash, redirect, jsonify, flash
+from stockholm_souls.database.db import verification, take_user_id, take_user_info
+from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
 
 dotenv.load_dotenv()
 
@@ -11,6 +11,9 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/', methods=['GET'])
 def index():
+    current_user = session.get('user')
+    if current_user:
+        return render_template('index.html', cu = current_user)
     return render_template('index.html')
 
 
@@ -23,11 +26,25 @@ def login_form():
 def login_user():
     name = request.form['uname']
     passwd = request.form['passwd']
-    info = take_user_info(name, passwd)
-    if info:
-        flash(info)
+    errors = verification(name, passwd)
+    if errors:
+        flash(errors)
         return redirect('/login')
-    return 'успех'
+    id = take_user_id(name)
+    user = {
+        'id': f'{id}',
+        'name': name,
+        'passwd': passwd
+    }
+    session['user'] = user
+    flash('Успешный вход')
+    return redirect(f'/profile/{id}')
+
+
+@app.route('/profile/<id>', methods=['GET'])
+def show_profile(id):
+    user_info = take_user_info(id)
+    return render_template('/user/profile.html', info = user_info)
 
 
 @app.route('/test', methods=['GET'])
@@ -38,3 +55,10 @@ def test():
         'jopa': 'asdasda'
     }
     return errors
+
+
+
+@app.route('/logout', methods=['POST', 'DELETE'])
+def logout():
+    session.clear()
+    return redirect('/')

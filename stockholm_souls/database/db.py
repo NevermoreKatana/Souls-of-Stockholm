@@ -7,7 +7,7 @@ from stockholm_souls.database.validator import password_verification
 dotenv.load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-def take_user_info(uname, passwd):
+def verification(uname, passwd):
     errors = {}
     with psycopg2.connect(DATABASE_URL) as conn:
         with conn.cursor() as cursor:
@@ -18,3 +18,19 @@ def take_user_info(uname, passwd):
                 return info
     errors['login'] = 'There is no such login'
     return errors
+
+
+def take_user_id(uname):
+    with psycopg2.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT id FROM users WHERE username = '{uname}'")
+            id = cursor.fetchall()[0][0]
+            return id
+
+
+def take_user_info(id):
+    with psycopg2.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM users WHERE id = '{id}'")
+            info = cursor.fetchall()
+            return info
