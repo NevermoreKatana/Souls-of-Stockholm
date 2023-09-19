@@ -58,7 +58,7 @@
                     <img src="../templates/main_bg.jpg" class="card-img-top" alt="User Image">
                     <div class="card-body text-center">
                         <h5 class="card-title">{{info[0][1]}}</h5>
-                        <p class="card-text">Российская Федерация</p>
+                        <p class="card-text">{{ a_inf[0][4] }}</p>
                     </div>
                 </div>
             </div>
@@ -74,11 +74,11 @@
                                 </tr>
                                 <tr>
                                     <th>Пол:</th>
-                                    <td>Мужской</td>
+                                    <td>{{a_inf[0][2]}}</td>
                                 </tr>
                                 <tr>
                                     <th>Полных лет:</th>
-                                    <td>43</td>
+                                    <td>{{ a_inf[0][3] }}</td>
                                 </tr>
                             </tbody>
                         </table>

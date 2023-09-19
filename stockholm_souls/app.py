@@ -1,6 +1,6 @@
 import os
 import dotenv
-from stockholm_souls.database.db import verification, take_user_id, take_user_info
+from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info
 from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
 
 dotenv.load_dotenv()
@@ -44,7 +44,8 @@ def login_user():
 @app.route('/profile/<id>', methods=['GET'])
 def show_profile(id):
     user_info = take_user_info(id)
-    return render_template('/user/profile.html', info = user_info)
+    additional_info = take_additional_user_info(id)
+    return render_template('/user/profile.html', info = user_info, a_inf=additional_info)
 
 
 @app.route('/test', methods=['GET'])
@@ -62,3 +63,12 @@ def test():
 def logout():
     session.clear()
     return redirect('/')
+
+
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    api_key = request.headers.get('API-Key')
+    # username = data.get('username')
+    # password = data.get('password')
+    return f'{api_key}'

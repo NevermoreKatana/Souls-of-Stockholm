@@ -34,3 +34,11 @@ def take_user_info(id):
             cursor.execute(f"SELECT * FROM users WHERE id = '{id}'")
             info = cursor.fetchall()
             return info
+
+
+def take_additional_user_info(id):
+    with psycopg2.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM users_additionally WHERE id = '{id}'")
+            info = cursor.fetchall()
+            return info
