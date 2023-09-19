@@ -4,3 +4,10 @@ def password_verification(data, passwd):
         errors['passwd'] = 'Incorrect login or password'
         return errors
 
+
+
+def password_similarity(passwd, c_passwd):
+    errors = {}
+    if passwd != c_passwd:
+        errors['passwd'] = "Password mismatch"
+    return errors

@@ -1,6 +1,7 @@
 import os
 import dotenv
-from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info
+from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info,create_new_user, create_session_data
+from stockholm_souls.database.validator import password_similarity
 from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
 
 dotenv.load_dotenv()
@@ -31,15 +32,32 @@ def login_user():
         flash(errors)
         return redirect('/login')
     id = take_user_id(name)
-    user = {
-        'id': f'{id}',
-        'name': name,
-        'passwd': passwd
-    }
-    session['user'] = user
+    user_data = create_session_data(id)
+    session['user'] = user_data
     flash('Успешный вход')
     return redirect(f'/profile/{id}')
 
+@app.route('/register', methods=['GET'])
+def reg_form():
+    return render_template('/user/register.html')
+
+
+@app.route('/register/', methods=['POST'])
+def register_user():
+    name = request.form['uname']
+    passwd = request.form['passwd']
+    confirm_passwd = request.form['confirm_passwd']
+    country = request.form['country']
+    gender = request.form['gender']
+    age = request.form['age']
+    errors = password_similarity(passwd, confirm_passwd)
+    if errors:
+        return redirect('/register')
+    create_new_user(name, passwd, country,gender,age)
+    id = take_user_id(name)
+    user_data = create_session_data(id)
+    session['user'] = user_data
+    return redirect(f'/profile/{id}')
 
 @app.route('/profile/<id>', methods=['GET'])
 def show_profile(id):
