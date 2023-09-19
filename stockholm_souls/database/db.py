@@ -36,7 +36,13 @@ def take_user_info(id):
             info = cursor.fetchall()
             return info
 
-
+def check_user(uname):
+    with psycopg2.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM users WHERE username = '{uname}' ")
+            if cursor.fetchall():
+                return True
+            return False
 
 
 def take_additional_user_info(id):
