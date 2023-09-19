@@ -14,10 +14,17 @@ def index():
 
 
 @app.route('/login', methods=['GET'])
-def log_in():
+def login_form():
     return render_template('/user/index.html')
 
 
+@app.route('/login/', methods=['POST'])
+def login_user():
+    name = request.form['uname']
+    passwd = request.form['passwd']
+    return render_template('/user/profile.html')
+
+
 @app.route('/test', methods=['GET'])
-def l():
-    return jsonify('jopa')
+def test():
+    return 'INFO'
