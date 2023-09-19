@@ -38,9 +38,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Форумы</a>
                 </li>
+            {% if cu %}
                 <li class="nav-item">
-                    <a class="nav-link " href="/login/">Профиль</a>
+                    <a class="nav-link " href="/profile/{{ cu.id }}">Профиль</a>
                 </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link " href="/login">Профиль</a>
+                </li>
+            {% endif %}
                 {% if cu %}
                 <li class="nav-item">
                     <form action="/logout" method="post" class="d-flex justify-content-center">

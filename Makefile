@@ -1,5 +1,6 @@
 install:
-    curl -sSL https://install.python-poetry.org | POETRY_PREVIEW=1 python3 -
+	poetry install
+
 dev:
 	poetry run flask --app stockholm_souls:app run --debug
 

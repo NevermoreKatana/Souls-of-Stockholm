@@ -58,7 +58,7 @@ def test():
 
 
 
-@app.route('/logout', methods=['POST', 'DELETE'])
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return redirect('/')
