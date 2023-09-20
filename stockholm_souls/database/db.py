@@ -148,3 +148,14 @@ def check_valid_api_key(secret, tg_id):
             return "такого пользователя нет"
     finally:
         release_connection(conn)
+
+
+def take_all_users():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT id, username FROM users")
+            info = cursor.fetchall()
+            return info
+    finally:
+        release_connection(conn)

@@ -9,9 +9,6 @@
     <!-- Дополнительные стили для красно-черных тона -->
     <style>
         body {
-            background-image: url(templates/main_bg.jpg);
-            background-attachment: fixed;
-            background-repeat: round;
             background-color: #303030; /* Красный фон */
             color: #848484; /* Черный текст */
         }
@@ -39,7 +36,7 @@
                     <a class="nav-link" href="#">Форумы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/profiles">Профили</a>
+                    <a class="nav-link " href="/">Профили</a>
                 </li>
             {% if cu %}
                 <li class="nav-item">
@@ -67,13 +64,34 @@
             </ul>
         </div>
     </nav>
-
     <!-- Основное содержание страницы -->
     <div class="container mt-4">
         <h1>Добро пожаловать на Souls of Stockholm </h1>
         <p>Здесь вы можете обсудить различные темы </p>
     </div>
-
+        <h2>Список пользователей</h2>
+    <table class="table table-striped" style="color: #FF8000">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Link</th>
+                <!-- Add more table headings as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <th>{{ u[0] }}</th>
+                <th>{{ u[1] }}</th>
+                <th>
+                    <a href="/profile/{{ u[0] }}">Профиль</a>
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
     <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
