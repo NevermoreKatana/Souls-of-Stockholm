@@ -81,6 +81,7 @@ def logout():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-    key = data['API-Key']
+    key = data['API_Key']
     user_id = data['user_id']
+    print(f"{key} >>>>>>>>>> {user_id} >>>>>>КРАСААААВЕЕЕЕЕЕЕЕЕЦ")
     return f"{key} >>>>>>>>>> {user_id} >>>>>>КРАСААААВЕЕЕЕЕЕЕЕЕЦ"
