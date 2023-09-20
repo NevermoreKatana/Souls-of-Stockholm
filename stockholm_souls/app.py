@@ -1,7 +1,7 @@
 import os
 import dotenv
 from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info,create_new_user, create_session_data, check_user
-from stockholm_souls.database.validator import password_similarity
+from stockholm_souls.database.validator import password_checker
 from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
 
 dotenv.load_dotenv()
@@ -50,11 +50,12 @@ def register_user():
     country = request.form['country']
     gender = request.form['gender']
     age = request.form['age']
-    errors = password_similarity(passwd, confirm_passwd)
-    if errors:
-        return redirect('/register')
+    errors = password_checker(passwd, confirm_passwd)
     if check_user(name):
-        flash('User est uje')
+        flash({'exist':'A user with this name exists'})
+        return redirect('/register')
+    elif errors:
+        flash(errors)
         return redirect('/register')
     create_new_user(name, passwd, country,gender,age)
     id = take_user_id(name)
@@ -64,9 +65,10 @@ def register_user():
 
 @app.route('/profile/<id>', methods=['GET'])
 def show_profile(id):
+    current_user = session.get('user')
     user_info = take_user_info(id)
     additional_info = take_additional_user_info(id)
-    return render_template('/user/profile.html', info = user_info, a_inf=additional_info)
+    return render_template('/user/profile.html', info = user_info, a_inf=additional_info, cu = current_user)
 
 
 @app.route('/test', methods=['GET'])
