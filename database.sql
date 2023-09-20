@@ -5,6 +5,7 @@ create table users
     username  varchar(255)
         unique,
     password  varchar(255),
+    salt varchar(255),
     create_at date
 );
 create table users_additionally

@@ -27,8 +27,10 @@ def verification(uname, passwd):
         with conn.cursor() as cursor:
             cursor.execute(f"SELECT * FROM users WHERE username = '{uname}'")
             info = cursor.fetchall()
+            salt = info[0][3]
+            passwd = hash_passwd(passwd, salt)
             if info:
-                info = password_verification(info, passwd)
+                info = password_verification(info, passwd['hex'])
                 return info
         errors['login'] = 'There is no such login'
         return errors
@@ -40,7 +42,7 @@ def take_user_id(uname):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users WHERE username = '{uname}'")
+            cursor.execute(f"SELECT id FROM users WHERE username = %s", (uname,))
             id = cursor.fetchall()[0][0]
             return id
     finally:
@@ -89,17 +91,18 @@ def create_new_user(name, passwd, country, gender, age):
             current_time = datetime.datetime.now()
             fromated_time = current_time.strftime('%Y-%m-%d')
             cursor.execute("BEGIN")
-            cursor.execute("INSERT INTO users (username, password, create_at) VALUES (%s, %s, %s)",
-                           (name, passwd, fromated_time))
+            cursor.execute("INSERT INTO users (username, password, salt, create_at) VALUES (%s, %s, %s, %s)",
+                           (name, passwd['hex'], passwd['salt'], fromated_time))
             cursor.execute("SELECT LASTVAL()")
             user_id = cursor.fetchone()[0]
             cursor.execute("INSERT INTO users_additionally (user_id, gender, years, country) VALUES (%s, %s, %s, %s)",
                            (user_id, gender, age, country))
-            secret = generate_secret(name, passwd)
+            secret = generate_secret(name, passwd['hex'])
             cursor.execute("INSERT INTO users_secrets (user_id, secret) VALUES (%s, %s)", (user_id, secret))
 
             cursor.execute("COMMIT")
     except:
+        print('jopa')
         cursor.execute("ROLLBACK")
     finally:
         release_connection(conn)
@@ -109,17 +112,28 @@ def create_session_data(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = (id)")
+            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
             data = cursor.fetchall()[0]
+            secret_key = take_user_secret_key(id)
             result_data = {
-                'id': f'{data[0]}',
-                'name': f'{data[1]}',
-                'passwd': f'{data[1]}'
+                'id': data[0],
+                'name': data[1],
+                'passwd': data[2],
+                'secret': secret_key[0][0]
             }
             return result_data
     finally:
         release_connection(conn)
 
+def take_user_secret_key(id):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT secret FROM users_secrets WHERE id = (id)")
+            info = cursor.fetchall()
+            return info
+    finally:
+        release_connection(conn)
 
 
 def check_valid_api_key(secret, tg_id):

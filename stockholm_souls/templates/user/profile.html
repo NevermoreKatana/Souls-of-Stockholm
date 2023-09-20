@@ -57,7 +57,6 @@
 <div class="alert alert-success" role="alert">{{ messages[0] }}</div>
     {% endif %}
 {% endwith %}
-
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12">
@@ -77,7 +76,7 @@
                             <tbody>
                                 <tr>
                                     <th>Зарегистрирован:</th>
-                                    <td>{{ info[0][3] }}</td>
+                                    <td>{{ info[0][4] }}</td>
                                 </tr>
                                 <tr>
                                     <th>Пол:</th>
@@ -87,6 +86,12 @@
                                     <th>Полных лет:</th>
                                     <td>{{ a_inf[0][3] }}</td>
                                 </tr>
+                                {% if cu.id == info[0][0]%}
+                                 <tr>
+                                    <th>Ваш секретный ключ</th>
+                                    <td>{{ cu.secret }}</td>
+                                    </tr>
+                            {% endif %}
                             </tbody>
                         </table>
                     </div>
