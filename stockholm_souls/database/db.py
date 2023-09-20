@@ -64,7 +64,7 @@ def check_user(uname):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE username = '{uname}' ")
+            cursor.execute(f"SELECT * FROM users WHERE username = %s", (uname,))
             if cursor.fetchall():
                 return True
             return False
