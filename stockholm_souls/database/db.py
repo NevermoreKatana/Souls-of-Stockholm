@@ -81,3 +81,15 @@ def create_session_data(id):
                 'passwd': f'{data[1]}'
             }
             return result_data
+
+
+
+def check_valid_api_key(secret, tg_id):
+    with psycopg2.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = (secret)")
+            data = cursor.fetchall()
+            if data:
+                cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE id = %s", (tg_id, data[0][0]))
+                return 'успех'
+            return "такого пользователя нет"
