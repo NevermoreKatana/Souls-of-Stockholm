@@ -3,7 +3,7 @@ import psycopg2.pool
 import datetime
 import os
 import dotenv
-from stockholm_souls.secrets import generate_secret
+from stockholm_souls.secrets import generate_secret, hash_passwd
 from stockholm_souls.database.validator import password_verification
 
 dotenv.load_dotenv()
@@ -15,8 +15,11 @@ connection_pool = psycopg2.pool.ThreadedConnectionPool(minconn=1, maxconn=10, ds
 def get_connection():
     return connection_pool.getconn()
 
+
 def release_connection(conn):
     connection_pool.putconn(conn)
+
+
 def verification(uname, passwd):
     errors = {}
     conn = get_connection()
@@ -44,7 +47,6 @@ def take_user_id(uname):
         release_connection(conn)
 
 
-
 def take_user_info(id):
     conn = get_connection()
     try:
@@ -54,6 +56,8 @@ def take_user_info(id):
             return info
     finally:
         release_connection(conn)
+
+
 def check_user(uname):
     conn = get_connection()
     try:
@@ -81,6 +85,7 @@ def create_new_user(name, passwd, country, gender, age):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
+            passwd = hash_passwd(passwd)
             current_time = datetime.datetime.now()
             fromated_time = current_time.strftime('%Y-%m-%d')
             cursor.execute("BEGIN")

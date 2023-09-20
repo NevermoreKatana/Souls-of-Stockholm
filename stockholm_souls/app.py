@@ -3,7 +3,6 @@ import dotenv
 from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info,create_new_user, create_session_data, check_user, check_valid_api_key
 from stockholm_souls.database.validator import password_checker
 from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
-
 dotenv.load_dotenv()
 
 app = Flask(__name__, static_folder='templates')
