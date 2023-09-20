@@ -2,6 +2,7 @@ import psycopg2
 import datetime
 import os
 import dotenv
+from stockholm_souls.secrets import generate_secret
 from stockholm_souls.database.validator import password_verification
 
 dotenv.load_dotenv()
@@ -62,6 +63,10 @@ def create_new_user(name, passwd, country, gender, age):
             conn.commit()
             id = take_user_id(name)
             cursor.execute("INSERT INTO users_additionally (user_id, gender, years, country) VALUES (%s, %s, %s, %s)", (id, gender, age, country))
+            conn.commit()
+            secret = generate_secret(name, passwd)
+            cursor.execute("INSERT INTO users_secrets (user_id, secret) VALUES (%s, %s)",
+                           (id, secret))
             conn.commit()
 
 

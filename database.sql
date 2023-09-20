@@ -17,3 +17,12 @@ create table users_additionally
     years   integer,
     country varchar(255)
 );
+create table users_secrets
+(
+    id      bigint generated always as identity
+        primary key,
+    user_id bigint
+        references users,
+    secret  varchar(255)
+        unique
+);

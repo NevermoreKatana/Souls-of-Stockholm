@@ -5,7 +5,6 @@ def password_verification(data, passwd):
         return errors
 
 
-
 def password_checker(passwd, c_passwd):
     errors = {}
     if passwd != c_passwd:

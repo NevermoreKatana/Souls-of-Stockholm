@@ -71,17 +71,6 @@ def show_profile(id):
     return render_template('/user/profile.html', info = user_info, a_inf=additional_info, cu = current_user)
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    errors = {
-        'login': 'asdasd',
-        'password': '123',
-        'jopa': 'asdasda'
-    }
-    return errors
-
-
-
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
@@ -92,6 +81,5 @@ def logout():
 @app.route('/api/login', methods=['POST'])
 def login():
     api_key = request.headers.get('API-Key')
-    # username = data.get('username')
-    # password = data.get('password')
-    return f'{api_key}'
+    user_id = request.headers.get('user_id')
+    return f'{api_key}>>>>>>> {user_id} КРАСААААВЕЕЕЕЕЕЕЕЕЦ'
