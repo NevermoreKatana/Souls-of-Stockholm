@@ -3,7 +3,7 @@ import psycopg2.pool
 import datetime
 import os
 import dotenv
-from stockholm_souls.secrets import generate_secret, hash_passwd
+from stockholm_souls.secrets import hash_passwd
 from stockholm_souls.database.validator import password_verification
 
 dotenv.load_dotenv()
