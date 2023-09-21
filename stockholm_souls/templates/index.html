@@ -36,12 +36,19 @@
         text-decoration: none; /* Убираем стандартное подчеркивание */
         color: inherit; /* Наследуем цвет текста от родительского элемента (черный) */
 
-}
+    }
     .post-link:hover,
     .post-link:active {
         text-decoration: none;
         color: #848484; /* Цвет при наведении и активации (черный) */
-}
+    }
+    .ellipsis-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Максимальная ширина текста перед троеточиями */
+    }
+
     </style>
 </head>
 <body>
@@ -94,20 +101,14 @@
         <p>Здесь вы можете обсудить различные темы</p>
 
         <!-- Список постов -->
+        {% for p in posts %}
         <div class="post">
-            <a href="/post1.html" class="post-link"> <!-- Здесь указываете ссылку на пост и добавляете класс "post-link" -->
-                <h2>Заголовок поста 1</h2>
-                <p>Текст поста 1</p>
+            <a href="/post/{{ p[0] }}" class="post-link"> <!-- Здесь указываете ссылку на пост и добавляете класс "post-link" -->
+                <h2>{{ p[1] }}</h2>
+                <p class="ellipsis-text">{{ p[2] }}</p>
             </a>
         </div>
-
-        <div class="post">
-            <a href="/post2.html" class="post-link"> <!-- Здесь указываете ссылку на другой пост и добавляете класс "post-link" -->
-                <h2>Заголовок поста 2</h2>
-                <p>Текст поста 2</p>
-            </a>
-        </div>
-
+        {% endfor %}
         <!-- Добавьте больше постов по аналогии -->
 
     </div>

@@ -1,9 +1,30 @@
 import os
 import dotenv
-from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info,create_new_user, create_session_data, check_user, check_valid_api_key, take_user_secret_key, take_all_users
 from stockholm_souls.database.validator import password_checker
-from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from stockholm_souls.database.db import (verification,
+                                         take_user_id,
+                                         take_user_info,
+                                         take_additional_user_info,
+                                         create_new_user,
+                                         create_session_data,
+                                         check_user,
+                                         check_valid_api_key,
+                                         take_user_secret_key,
+                                         take_all_users,
+                                         take_all_posts,
+                                         take_one_post)
+from flask import (Flask,
+                   render_template,
+                   request,
+                   flash,
+                   redirect,
+                   jsonify,
+                   flash,
+                   session)
+from flask_jwt_extended import (JWTManager,
+                                create_access_token,
+                                jwt_required,
+                                get_jwt_identity)
 dotenv.load_dotenv()
 
 app = Flask(__name__, static_folder='templates')
@@ -12,10 +33,11 @@ jwt = JWTManager(app)
 
 @app.route('/', methods=['GET'])
 def index():
+    posts_data = take_all_posts()
     current_user = session.get('user')
     if current_user:
-        return render_template('index.html', cu = current_user)
-    return render_template('index.html')
+        return render_template('index.html', cu = current_user, posts=posts_data)
+    return render_template('index.html',posts=posts_data)
 
 
 @app.route('/login', methods=['GET'])
@@ -99,3 +121,8 @@ def show_profiles():
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('/error/index.html')
+
+@app.route('/post/<id>', methods=['GET'])
+def show_post(id):
+    post_info = take_one_post(id)
+    return render_template('post.html', post=post_info[0])

@@ -158,3 +158,24 @@ def take_all_users():
             return info
     finally:
         release_connection(conn)
+
+
+def take_all_posts():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM posts")
+            info = cursor.fetchall()
+            return info
+    finally:
+        release_connection(conn)
+
+def take_one_post(id):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM posts WHERE id = %s", (id,))
+            info = cursor.fetchall()
+            return info
+    finally:
+        release_connection(conn)
