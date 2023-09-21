@@ -25,7 +25,7 @@ def verification(uname, passwd):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE username = '{uname}'")
+            cursor.execute(f"SELECT * FROM users WHERE username = %s", (uname,))
             info = cursor.fetchall()
             salt = info[0][3]
             passwd = hash_passwd(passwd, salt)
@@ -53,7 +53,7 @@ def take_user_info(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = {id} ")
+            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
             info = cursor.fetchall()
             return info
     finally:
@@ -128,7 +128,7 @@ def take_user_secret_key(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT secret FROM users_secrets WHERE id = (id)")
+            cursor.execute(f"SELECT secret FROM users_secrets WHERE id = %s", (id,))
             info = cursor.fetchall()
             return info
     finally:
