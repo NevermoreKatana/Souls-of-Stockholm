@@ -21,17 +21,34 @@
     </style>
 </head>
 <body>
-    <!-- Навигационная панель Bootstrap -->
+ <!-- Навигационная панель Bootstrap -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="/">Души стокгольма</a>
-        <!-- Добавьте элементы навигации по вашим страницам, если необходимо -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Форумы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profiles">Профили</a>
+                </li>
     </nav>
 {#{{ post }}#}
     <!-- Основное содержание страницы -->
     <div class="container mt-4">
         <!-- Здесь вы можете использовать параметры запроса (например, ID поста) для получения и отображения нужного поста -->
-        <h1>{{ post[1] }}</h1>
-        <p>{{ post[2] }}</p>
+        <h1>{{ post[3] }}</h1>
+        <h6>
+            <a href="/profile/{{ post[1] }}">{{ post[2] }}</a>
+        </h6>
+        <h5>{{ post[4] }}</h5>
+
             <h2>Комментарии</h2>
 
 

@@ -125,4 +125,6 @@ def page_not_found(error):
 @app.route('/post/<id>', methods=['GET'])
 def show_post(id):
     post_info = take_one_post(id)
-    return render_template('post.html', post=post_info[0])
+    if post_info:
+        return render_template('post.html', post=post_info[0])
+    return '1'
