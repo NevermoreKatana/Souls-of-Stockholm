@@ -93,7 +93,7 @@ def login():
 @app.route('/profiles', methods=['GET'])
 def show_profiles():
     data = take_all_users()
-    return render_template('profiles.html', users=data)
+    return render_template('user/profiles.html', users=data)
 
 
 @app.errorhandler(404)
