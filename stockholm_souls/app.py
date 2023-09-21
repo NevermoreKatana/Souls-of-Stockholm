@@ -115,7 +115,8 @@ def login():
 @app.route('/profiles', methods=['GET'])
 def show_profiles():
     data = take_all_users()
-    return render_template('user/profiles.html', users=data)
+    current_user = session.get('user')
+    return render_template('user/profiles.html', users=data, cu=current_user)
 
 
 @app.errorhandler(404)
@@ -125,6 +126,7 @@ def page_not_found(error):
 @app.route('/post/<id>', methods=['GET'])
 def show_post(id):
     post_info = take_one_post(id)
+    current_user = session.get('user')
     if post_info:
-        return render_template('post.html', post=post_info[0])
+        return render_template('post.html', post=post_info[0], cu=current_user)
     return '1'

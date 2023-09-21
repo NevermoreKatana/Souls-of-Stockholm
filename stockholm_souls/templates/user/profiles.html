@@ -46,20 +46,6 @@
                 <li class="nav-item">
                     <a class="nav-link " href="/login">Профиль</a>
                 </li>
-            {% endif %}
-                {% if cu %}
-                <li class="nav-item">
-                    <form action="/logout" method="post" class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-light">Выйти</button>
-                    </form>
-
-                </li>
-                    {% else %}
-                     <li class="nav-item">
-                    <form action="/login" method="get" class="d-flex justify-content-center">
-                        <button type="submit"  class="btn btn-primary">Войти/Зарегестрироваться</button>
-                    </form>
-                </li>
                 {% endif %}
             </ul>
         </div>
