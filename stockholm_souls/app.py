@@ -3,11 +3,12 @@ import dotenv
 from stockholm_souls.database.db import verification, take_user_id, take_user_info, take_additional_user_info,create_new_user, create_session_data, check_user, check_valid_api_key, take_user_secret_key, take_all_users
 from stockholm_souls.database.validator import password_checker
 from flask import Flask, render_template, request, flash, redirect, jsonify, flash, session
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 dotenv.load_dotenv()
 
 app = Flask(__name__, static_folder='templates')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
+jwt = JWTManager(app)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -19,7 +20,7 @@ def index():
 
 @app.route('/login', methods=['GET'])
 def login_form():
-    return render_template('/user/index.html')
+    return render_template('/user/login.html')
 
 
 @app.route('/login/', methods=['POST'])
@@ -56,7 +57,8 @@ def register_user():
     elif errors:
         flash(errors)
         return redirect('/register')
-    create_new_user(name, passwd, country,gender,age)
+    secret = create_access_token(identity=name)
+    create_new_user(name, passwd, country,gender,age, secret)
     id = take_user_id(name)
     user_data = create_session_data(id)
     session['user'] = user_data
@@ -80,12 +82,17 @@ def logout():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-    key = data['API_Key']
-    user_id = data['user_id']
-    check = check_valid_api_key(key, user_id)
+    jwt_key = data['API_Key']
+    tg_id = data['user_id']
+    check = check_valid_api_key(jwt_key, tg_id)
     return check
 
 @app.route('/profiles', methods=['GET'])
 def show_profiles():
     data = take_all_users()
     return render_template('profiles.html', users=data)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return 'иди отсюда'

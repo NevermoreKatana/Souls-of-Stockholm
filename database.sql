@@ -24,7 +24,7 @@ create table users_secrets
         primary key,
     user_id bigint
         references users,
-    secret  varchar(255)
+    secret  varchar(2500)
         unique,
     telegram_id bigint
         unique

@@ -18,9 +18,30 @@
         .navbar {
             background-color: #000000; /* Черный фон для навигационной панели */
         }
-        .btn-primary:hover{
-             background-color: #0040ae;
+        .btn-primary:hover {
+            background-color: #0040ae;
         }
+        .post {
+
+            background-color: #1c1c1c; /* Цвет фона поста */
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+    .post:hover {
+        background-color: #1c1c1c; /* Цвет фона поста при наведении (оставляем тот же цвет) */
+    }
+    .post-link {
+        text-decoration: none; /* Убираем стандартное подчеркивание */
+        color: inherit; /* Наследуем цвет текста от родительского элемента (черный) */
+
+}
+    .post-link:hover,
+    .post-link:active {
+        text-decoration: none;
+        color: #848484; /* Цвет при наведении и активации (черный) */
+}
     </style>
 </head>
 <body>
@@ -39,30 +60,29 @@
                     <a class="nav-link" href="#">Форумы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/profiles">Профили</a>
+                    <a class="nav-link" href="/profiles">Профили</a>
                 </li>
-            {% if cu %}
-                <li class="nav-item">
-                    <a class="nav-link " href="/profile/{{ cu.id }}">Профиль</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link " href="/login">Профиль</a>
-                </li>
-            {% endif %}
                 {% if cu %}
-                <li class="nav-item">
-                    <form action="/logout" method="post" class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-light">Выйти</button>
-                    </form>
-
-                </li>
-                    {% else %}
-                     <li class="nav-item">
-                    <form action="/login" method="get" class="d-flex justify-content-center">
-                        <button type="submit"  class="btn btn-primary">Войти/Зарегестрироваться</button>
-                    </form>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/{{ cu.id }}">Профиль</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Профиль</a>
+                    </li>
+                {% endif %}
+                {% if cu %}
+                    <li class="nav-item">
+                        <form action="/logout" method="post" class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-light">Выйти</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <form action="/login" method="get" class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Войти/Зарегистрироваться</button>
+                        </form>
+                    </li>
                 {% endif %}
             </ul>
         </div>
@@ -70,8 +90,26 @@
 
     <!-- Основное содержание страницы -->
     <div class="container mt-4">
-        <h1>Добро пожаловать на Souls of Stockholm </h1>
-        <p>Здесь вы можете обсудить различные темы </p>
+        <h1>Добро пожаловать на Souls of Stockholm</h1>
+        <p>Здесь вы можете обсудить различные темы</p>
+
+        <!-- Список постов -->
+        <div class="post">
+            <a href="/post1.html" class="post-link"> <!-- Здесь указываете ссылку на пост и добавляете класс "post-link" -->
+                <h2>Заголовок поста 1</h2>
+                <p>Текст поста 1</p>
+            </a>
+        </div>
+
+        <div class="post">
+            <a href="/post2.html" class="post-link"> <!-- Здесь указываете ссылку на другой пост и добавляете класс "post-link" -->
+                <h2>Заголовок поста 2</h2>
+                <p>Текст поста 2</p>
+            </a>
+        </div>
+
+        <!-- Добавьте больше постов по аналогии -->
+
     </div>
 
     <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->

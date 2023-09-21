@@ -83,7 +83,7 @@ def take_additional_user_info(id):
         release_connection(conn)
 
 
-def create_new_user(name, passwd, country, gender, age):
+def create_new_user(name, passwd, country, gender, age, secret):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
@@ -97,7 +97,6 @@ def create_new_user(name, passwd, country, gender, age):
             user_id = cursor.fetchone()[0]
             cursor.execute("INSERT INTO users_additionally (user_id, gender, years, country) VALUES (%s, %s, %s, %s)",
                            (user_id, gender, age, country))
-            secret = generate_secret(name, passwd['hex'])
             cursor.execute("INSERT INTO users_secrets (user_id, secret) VALUES (%s, %s)", (user_id, secret))
 
             cursor.execute("COMMIT")
@@ -140,7 +139,7 @@ def check_valid_api_key(secret, tg_id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = (secret)")
+            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (secret,))
             data = cursor.fetchall()
             if data:
                 cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE id = %s", (tg_id, data[0][0]))
