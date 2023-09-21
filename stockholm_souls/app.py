@@ -68,8 +68,11 @@ def register_user():
 def show_profile(id):
     current_user = session.get('user')
     user_info = take_user_info(id)
-    additional_info = take_additional_user_info(id)
-    return render_template('/user/profile.html', info = user_info, a_inf=additional_info, cu = current_user)
+    if user_info:
+        additional_info = take_additional_user_info(id)
+        return render_template('/user/profile.html', info = user_info, a_inf=additional_info, cu = current_user)
+    else:
+        return render_template('error/index.html')
 
 
 @app.route('/logout', methods=['POST'])
@@ -95,4 +98,4 @@ def show_profiles():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return 'иди отсюда'
+    return render_template('/error/index.html')
