@@ -66,3 +66,12 @@ INSERT INTO posts (name, content) VALUES ('ЧвК Редан?О_О ryodan?? 100-
 Курапика
 Хисока
 ');
+create table comments
+(
+    id       bigint generated always as identity
+        primary key,
+    post_id  bigint
+        references posts,
+    username varchar(255),
+    content  text
+);
