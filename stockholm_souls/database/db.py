@@ -154,7 +154,8 @@ def check_valid_api_key(secret, tg_id):
             cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (secret,))
             data = cursor.fetchall()
             if data:
-                cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE id = %s", (tg_id, data[0][0]))
+                cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE user_id = %s", (tg_id, data[0][0]))
+                cursor.execute("COMMIT")
                 return checks['success']
             return checks['denied']
     finally:
@@ -176,7 +177,7 @@ def take_all_posts():
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM posts")
+            cursor.execute(f"SELECT * FROM posts ORDER BY id")
             info = cursor.fetchall()
             return info
     finally:
@@ -190,5 +191,17 @@ def take_one_post(id):
             cursor.execute(f"SELECT * FROM posts WHERE id = %s", (id,))
             info = cursor.fetchall()
             return info
+    finally:
+        release_connection(conn)
+
+def take_posts_api(jwt):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (jwt,))
+            data = cursor.fetchall()
+            if data:
+                cursor.execute(f"SELECT * FROM posts ORDER BY id ")
+                return cursor.fetchall()
     finally:
         release_connection(conn)

@@ -12,7 +12,8 @@ from stockholm_souls.database.db import (verification,
                                          take_user_secret_key,
                                          take_all_users,
                                          take_all_posts,
-                                         take_one_post)
+                                         take_one_post,
+                                         take_posts_api)
 from flask import (Flask,
                    render_template,
                    request,
@@ -129,4 +130,11 @@ def show_post(id):
     current_user = session.get('user')
     if post_info:
         return render_template('post.html', post=post_info[0], cu=current_user)
-    return '1'
+    return render_template('/error/index.html')
+
+@app.route('/<jwt>/posts', methods=['POST'])
+def api_posts(jwt):
+    data = take_posts_api(jwt)
+    if data:
+        return jsonify(data)
+    return jsonify({'denied': 'Отказано в доступе'})
