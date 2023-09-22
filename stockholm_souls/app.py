@@ -110,7 +110,7 @@ def login():
     jwt_key = data['API_Key']
     tg_id = data['user_id']
     check = check_valid_api_key(jwt_key, tg_id)
-    return check
+    return jsonify(check)
 
 @app.route('/profiles', methods=['GET'])
 def show_profiles():

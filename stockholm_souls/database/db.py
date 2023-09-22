@@ -12,6 +12,18 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 # Создаем пул соединений
 connection_pool = psycopg2.pool.ThreadedConnectionPool(minconn=1, maxconn=10, dsn=DATABASE_URL)
 
+checks = {
+    'success' : {
+        'answer': 'Проверка прошла успешно телеграмм успешно привязан к аккаунту',
+        'status_code': 'authorized'
+    },
+    'denied': {
+        'answer': 'Проверка провалена, телеграм не привязан к аккаунту',
+        'status_code': 'not authorized'
+    }
+}
+
+
 def get_connection():
     return connection_pool.getconn()
 
@@ -143,8 +155,8 @@ def check_valid_api_key(secret, tg_id):
             data = cursor.fetchall()
             if data:
                 cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE id = %s", (tg_id, data[0][0]))
-                return 'успех'
-            return "такого пользователя нет"
+                return checks['success']
+            return checks['denied']
     finally:
         release_connection(conn)
 
@@ -169,6 +181,7 @@ def take_all_posts():
             return info
     finally:
         release_connection(conn)
+
 
 def take_one_post(id):
     conn = get_connection()
