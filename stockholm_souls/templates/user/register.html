@@ -10,22 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="templates/user/css/style.css">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="/">Души стокгольма</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Форумы</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    {% include 'header.html' %}
 
     {% with messages = get_flashed_messages() %}
         {% if messages[0] %}

@@ -148,5 +148,8 @@ def api_posts(jwt):
 def add_comment(post_id):
     content = request.form['comment']
     user = session.get('user')
-    add_comments(post_id, content, user)
+    if user:
+        add_comments(post_id, content, user)
+        return redirect(f'/post/{post_id}')
+    flash('Войдите в аккаунт')
     return redirect(f'/post/{post_id}')
