@@ -9,7 +9,6 @@
     <!-- Дополнительные стили для красно-черных тона -->
     <style>
         body {
-            background-image: url(../templates/images/main_bg.jpg);
             background-attachment: fixed;
             background-repeat: round;
             background-color: #303030; /* Красный фон */
@@ -41,7 +40,6 @@
 
         <!-- Список комментариев -->
        <div class="mt-4">
-            <h3>Список комментариев:</h3>
             <ul style="list-style-type: none; padding: 0;">
                 <!-- Здесь вы можете вставить цикл, чтобы отобразить список комментариев к посту -->
                 {% for c in comments %}
