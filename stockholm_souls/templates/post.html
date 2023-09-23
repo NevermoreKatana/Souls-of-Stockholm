@@ -40,20 +40,22 @@
 
 
         <!-- Список комментариев -->
-        <div class="mt-4">
+       <div class="mt-4">
             <h3>Список комментариев:</h3>
-            <ul style="color: orangered; font-size: 24px;">
+            <ul style="list-style-type: none; padding: 0;">
                 <!-- Здесь вы можете вставить цикл, чтобы отобразить список комментариев к посту -->
                 {% for c in comments %}
-                    <dl>
-                      <dt>{{c[4]}}</dt>
-                      <dd>
-                          <a href="/profile/{{ c[2] }}">{{ c[3] }}</a>
-                      </dd>
-                    </dl>
+                    <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <img src="../templates/images/main_bg.jpg" alt="Фото пользователя" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <div style="margin-left: 10px;">
+                            <strong>{{c[4]}}</strong>
+                            <br>
+                            <a href="/profile/{{ c[2] }}">{{ c[3] }}</a>
+                        </div>
+                    </li>
                 {% endfor %}
-                <!-- Добавьте больше комментариев по аналогии -->
             </ul>
+                <!-- Добавьте больше комментариев по аналогии -->
             <form action="/post/{{ post[0] }}/comment" method="post">
             <div class="form-group">
                 <label for="comment">Добавить комментарий:</label>
