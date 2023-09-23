@@ -13,7 +13,9 @@ from stockholm_souls.database.db import (verification,
                                          take_all_users,
                                          take_all_posts,
                                          take_one_post,
-                                         take_posts_api)
+                                         take_posts_api,
+                                         take_comments,
+                                         add_comments)
 from flask import (Flask,
                    render_template,
                    request,
@@ -127,10 +129,12 @@ def page_not_found(error):
 @app.route('/post/<id>', methods=['GET'])
 def show_post(id):
     post_info = take_one_post(id)
+    comments_data = take_comments(id)
     current_user = session.get('user')
     if post_info:
-        return render_template('post.html', post=post_info[0], cu=current_user)
+        return render_template('post.html', post=post_info[0], cu=current_user, comments = comments_data)
     return render_template('/error/index.html')
+
 
 @app.route('/<jwt>/posts', methods=['POST'])
 def api_posts(jwt):
@@ -138,3 +142,11 @@ def api_posts(jwt):
     if data:
         return jsonify(data)
     return jsonify({'denied': 'Отказано в доступе'})
+
+
+@app.route('/post/<post_id>/comment', methods=['POST'])
+def add_comment(post_id):
+    content = request.form['comment']
+    user = session.get('user')
+    add_comments(post_id, content, user)
+    return redirect(f'/post/{post_id}')

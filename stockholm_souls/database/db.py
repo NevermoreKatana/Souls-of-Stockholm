@@ -194,6 +194,7 @@ def take_one_post(id):
     finally:
         release_connection(conn)
 
+
 def take_posts_api(jwt):
     conn = get_connection()
     try:
@@ -203,5 +204,26 @@ def take_posts_api(jwt):
             if data:
                 cursor.execute(f"SELECT * FROM posts ORDER BY id ")
                 return cursor.fetchall()
+    finally:
+        release_connection(conn)
+
+
+def take_comments(post_id):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM comments WHERE post_id = %s", (post_id,))
+            data = cursor.fetchall()
+            return data
+    finally:
+        release_connection(conn)
+
+
+def add_comments(post_id, content, user_data):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"INSERT INTO comments (post_id, username, content) VALUES (%s, %s, %s)", (post_id, user_data['name'], content,))
+            cursor.execute("COMMIT")
     finally:
         release_connection(conn)

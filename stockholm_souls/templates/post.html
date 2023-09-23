@@ -49,7 +49,6 @@
                 {% endif %}
             </ul>
     </nav>
-{#{{ post }}#}
     <!-- Основное содержание страницы -->
     <div class="container mt-4">
         <!-- Здесь вы можете использовать параметры запроса (например, ID поста) для получения и отображения нужного поста -->
@@ -65,16 +64,22 @@
         <!-- Список комментариев -->
         <div class="mt-4">
             <h3>Список комментариев:</h3>
-            <ul>
+            <ul style="color: orangered; font-size: 24px;">
                 <!-- Здесь вы можете вставить цикл, чтобы отобразить список комментариев к посту -->
-                <li>Комментарий 1</li>
-                <li>Комментарий 2</li>
+                {% for c in comments %}
+                    <dl>
+                      <dt>{{c[3]}}</dt>
+                      <dd>
+                          <a href="/profile/{{ post[1] }}">{{ post[2] }}</a>
+                      </dd>
+                    </dl>
+                {% endfor %}
                 <!-- Добавьте больше комментариев по аналогии -->
             </ul>
-            <form action="/post/{{ post_id }}/comment" method="post">
+            <form action="/post/{{ post[0] }}/comment" method="post">
             <div class="form-group">
                 <label for="comment">Добавить комментарий:</label>
-                <textarea class="form-control" id="comment" name="comment" rows="4" required></textarea>
+                <textarea class="form-control" id="comment" name="comment" rows="4" style="background-color: black" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Опубликовать комментарий</button>
         </form>
