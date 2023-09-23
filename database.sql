@@ -72,6 +72,7 @@ create table comments
         primary key,
     post_id  bigint
         references posts,
+    user_id bigint references users(id),
     username varchar(255),
     content  text
 );

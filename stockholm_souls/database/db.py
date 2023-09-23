@@ -223,7 +223,7 @@ def add_comments(post_id, content, user_data):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"INSERT INTO comments (post_id, username, content) VALUES (%s, %s, %s)", (post_id, user_data['name'], content,))
+            cursor.execute(f"INSERT INTO comments (post_id, user_id, username, content) VALUES (%s, %s, %s, %s)", (post_id, user_data['id'],user_data['name'], content,))
             cursor.execute("COMMIT")
     finally:
         release_connection(conn)
