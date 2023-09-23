@@ -108,7 +108,7 @@ def logout():
 
 
 @app.route('/api/login', methods=['POST'])
-def login():
+def api_login():
     data = request.get_json()
     jwt_key = data['API_Key']
     tg_id = data['user_id']
@@ -153,3 +153,14 @@ def add_comment(post_id):
         return redirect(f'/post/{post_id}')
     flash('Войдите в аккаунт')
     return redirect(f'/post/{post_id}')
+
+
+@app.route('/a_api/login', methods=['POST'])
+def a_api_login():
+    data = request.get_json()
+    user_name = data['login']
+    passwd = data['password']
+    errors = verification(user_name, passwd)
+    if errors:
+        return jsonify(errors)
+    return jsonify({'login': 'success'})

@@ -39,9 +39,9 @@ def verification(uname, passwd):
         with conn.cursor() as cursor:
             cursor.execute(f"SELECT * FROM users WHERE username = %s", (uname,))
             info = cursor.fetchall()
-            salt = info[0][3]
-            passwd = hash_passwd(passwd, salt)
             if info:
+                salt = info[0][3]
+                passwd = hash_passwd(passwd, salt)
                 info = password_verification(info, passwd['hex'])
                 return info
         errors['login'] = 'There is no such login'
