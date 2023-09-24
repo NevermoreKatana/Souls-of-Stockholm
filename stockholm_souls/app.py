@@ -181,4 +181,5 @@ def create_post():
         user_name = current_user['name']
         add_new_post(user_id, user_name,post_name,contet)
         return redirect('/')
-    return  redirect('/login')
+    flash('Сначала войдите в аккаунт')
+    return redirect('/post/create')

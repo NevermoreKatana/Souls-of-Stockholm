@@ -52,6 +52,11 @@
 </head>
 <body>
     {% include 'header.html' %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
     <h1>Создание нового поста</h1>
     <form action="/post/create/" method="post" style="padding-left: 40%">
         <label for="заголовок">Заголовок:</label>
