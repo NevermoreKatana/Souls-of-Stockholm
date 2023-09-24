@@ -142,8 +142,8 @@ def show_post(id):
 def api_posts(jwt):
     data = take_posts_api(jwt)
     if data:
-        return jsonify(data)
-    return jsonify({'denied': 'Отказано в доступе'})
+        return data
+    return {'denied': 'Отказано в доступе'}
 
 
 @app.route('/post/<post_id>/comment', methods=['POST'])
