@@ -16,7 +16,8 @@ from stockholm_souls.database.db import (verification,
                                          take_posts_api,
                                          take_comments,
                                          add_comments,
-                                         add_new_post)
+                                         add_new_post,
+                                         take_jwt)
 from flask import (Flask,
                    render_template,
                    request,
@@ -164,7 +165,8 @@ def a_api_login():
     errors = verification(user_name, passwd)
     if errors:
         return errors
-    return {'login': 'success'}
+    jwt = take_jwt(user_name)
+    return {'login': 'success', "jwt": jwt}
 
 
 @app.route('/post/create', methods=['GET'])
