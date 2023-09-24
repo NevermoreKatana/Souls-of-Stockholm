@@ -15,7 +15,8 @@ from stockholm_souls.database.db import (verification,
                                          take_one_post,
                                          take_posts_api,
                                          take_comments,
-                                         add_comments)
+                                         add_comments,
+                                         add_new_post)
 from flask import (Flask,
                    render_template,
                    request,
@@ -132,7 +133,7 @@ def show_post(id):
     comments_data = take_comments(id)
     current_user = session.get('user')
     if post_info:
-        return render_template('post.html', post=post_info[0], cu=current_user, comments = comments_data)
+        return render_template('posts/post.html', post=post_info[0], cu=current_user, comments = comments_data)
     return render_template('/error/index.html')
 
 
@@ -164,3 +165,20 @@ def a_api_login():
     if errors:
         return jsonify(errors)
     return jsonify({'login': 'success'})
+
+
+@app.route('/post/create', methods=['GET'])
+def create_post_form():
+    return render_template('posts/create_post.html')
+
+@app.route('/post/create/', methods=['POST'])
+def create_post():
+    current_user = session.get('user')
+    if current_user:
+        post_name = request.form['name']
+        contet = request.form['contet']
+        user_id = current_user['id']
+        user_name = current_user['name']
+        add_new_post(user_id, user_name,post_name,contet)
+        return redirect('/')
+    return  redirect('/login')

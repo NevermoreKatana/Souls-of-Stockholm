@@ -227,3 +227,13 @@ def add_comments(post_id, content, user_data):
             cursor.execute("COMMIT")
     finally:
         release_connection(conn)
+
+
+def add_new_post(user_id, username, post_name, content):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"INSERT INTO posts (user_id, user_name, name, content) VALUES (%s,%s,%s,%s)", (user_id, username, post_name, content))
+            cursor.execute("COMMIT")
+    finally:
+        release_connection(conn)
