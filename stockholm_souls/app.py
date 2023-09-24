@@ -163,8 +163,8 @@ def a_api_login():
     passwd = data['password']
     errors = verification(user_name, passwd)
     if errors:
-        return jsonify(errors)
-    return jsonify({'login': 'success'})
+        return errors
+    return {'login': 'success'}
 
 
 @app.route('/post/create', methods=['GET'])
