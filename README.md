@@ -28,7 +28,7 @@ make dev
 
 ## Результат можно посмотреть
 
-[Page-analyzer](https://souls-of-stockholm.onrender.com/)
+[Souls of Stockholm](https://souls-of-stockholm.onrender.com/)
 
 ## Репозитории мобильной части 
 - Тут когда-то будет TgBot
