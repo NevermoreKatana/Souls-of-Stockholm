@@ -138,7 +138,7 @@ def show_post(id):
     return render_template('/error/index.html')
 
 
-@app.route('/<jwt>/posts', methods=['POST'])
+@app.route('/<jwt>/posts', methods=['GET'])
 def api_posts(jwt):
     data = take_posts_api(jwt)
     if data:
@@ -185,3 +185,4 @@ def create_post():
         return redirect('/')
     flash('Сначала войдите в аккаунт')
     return redirect('/post/create')
+
