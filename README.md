@@ -36,9 +36,10 @@ make dev
 
 
 ## Authors
-
+- ### Сервер и десктоп
 - [@KatanaNevermore](https://github.com/NevermoreKatana)
 - [@KatanaNevermore(Tg)](https://t.me/nevermorekatana)
+- ### Мобильная часть
 - [@Rukati](https://github.com/Rukati)
 - [@Rukati(Tg)](https://t.me/bubblessort)
 
