@@ -249,3 +249,14 @@ def take_jwt(username):
             return cursor.fetchone()[0]
     finally:
         release_connection(conn)
+
+
+def take_one_post_api(id):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT * FROM posts WHERE id = %s", (id,))
+            data = cursor.fetchall()
+            return data
+    finally:
+        release_connection(conn)

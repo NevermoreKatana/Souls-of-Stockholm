@@ -17,7 +17,8 @@ from stockholm_souls.database.db import (verification,
                                          take_comments,
                                          add_comments,
                                          add_new_post,
-                                         take_jwt)
+                                         take_jwt,
+                                         take_one_post_api)
 from flask import (Flask,
                    render_template,
                    request,
@@ -186,3 +187,10 @@ def create_post():
     flash('Сначала войдите в аккаунт')
     return redirect('/post/create')
 
+
+@app.route('/<jwt>/posts/<post_id>', methods=['GET'])
+def show_post_api(jwt,post_id):
+    post_data = take_one_post_api(post_id)
+    if post_data:
+        return jsonify(post_data)
+    return jsonify({'denied': 'Такого поста нет'})

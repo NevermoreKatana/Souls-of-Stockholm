@@ -87,7 +87,21 @@ INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana'
 Курапика
 Хисока
 ');
-INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'ZXC???', '100-7???????');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'ZXC???', 'ЧвК Редан?О_О ryodan??');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'Премьера когда то в 2025 году.', e'Вышел трейлер Dungeons & Kittens, мультсериала вдохновлённого стилем игры Dungeons & Dragons.
+
+По сюжету группа котят, которых изгнали из кошачьего королевства, отправится на поиски сокровища, которое поможет им вернуться домой.');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'Мальчик и птица', e'«Мальчик и птица» Миядзаки выйдет в России 7 декабря.
+
+Премьера была запланирована на ноябрь, но немного перенесли.');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', '⚡️ Genshin Impact чуть не взорвал iPhone 15 Pro.', e'⚡️ Genshin Impact чуть не взорвал iPhone 15 Pro.
+
+Игру запустили с максимальными настройками графики и смартфон начал сильно лагать и нагреваться.
+
+При этом игры вроде GTA: San Andreas, eFootball PES, PUBG Mobile и Call of Duty Mobile запустились без проблем.');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'Искусство высшего уровня.', 'Ютубер построил картину Ван Гога «Звёздная ночь» в Майнкрафте.');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'Продолжение истории с украинской локализацией в Cyberpunk 2077: ', 'СССР заменили на Украину');
+INSERT INTO public.posts (user_id, user_name, name, content) VALUES (1, 'katana', 'Ш е д е в р.', 'Энтузиаст создал интро Baldur’s Gate 3 в стиле «Друзей».');
 create table comments
 (
     id       bigint generated always as identity
