@@ -4,68 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Souls of Stockholm</title>
-    <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Дополнительные стили для красно-черных тона -->
-    <style>
-        body {
-            background-attachment: fixed;
-            background-repeat: round;
-            background-color: #303030; /* Красный фон */
-            color: #848484; /* Черный текст */
-        }
-        .navbar {
-            background-color: #000000; /* Черный фон для навигационной панели */
-        }
-        .btn-primary:hover {
-            background-color: #0040ae;
-        }
-        .post {
-
-            background-color: #1c1c1c; /* Цвет фона поста */
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-    .post:hover {
-        background-color: #1c1c1c; /* Цвет фона поста при наведении (оставляем тот же цвет) */
-    }
-    .post-link {
-        text-decoration: none; /* Убираем стандартное подчеркивание */
-        color: inherit; /* Наследуем цвет текста от родительского элемента (черный) */
-
-    }
-    .post-link:hover,
-    .post-link:active {
-        text-decoration: none;
-        color: #848484; /* Цвет при наведении и активации (черный) */
-    }
-    .ellipsis-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Максимальная ширина текста перед троеточиями */
-    }
-
-    </style>
+    <link href="../templates/posts/style.css" rel="stylesheet">
 </head>
+{% include 'header.html' %}
 <body>
-    {% include 'header.html' %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
-        {% endif %}
-    {% endwith %}
-    <h1>Создание нового поста</h1>
-    <form action="/post/create/" method="post" style="padding-left: 40%">
-        <label for="заголовок">Заголовок:</label>
-        <input type="text" id="name" name="name" required><br><br>
+    <div class="form-container">
+        <h1 >Создание нового поста</h1>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Название поста</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Название поста">
+            </div>
 
-        <label for="тело_поста">Тело поста:</label><br>
-        <textarea id="content" name="contet" rows="4" cols="50" required></textarea><br><br>
-
-        <input type="submit" value="Создать пост">
-    </form>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Содержание поста</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary submit-btn">Отправить</button>
+        </form>
+    </div>
 </body>
 </html>

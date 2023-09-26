@@ -4,80 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Souls of Stockholm</title>
-    <!-- Подключение Bootstrap CSS -->
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Дополнительные стили для красно-черных тона -->
-    <style>
-        body {
-            background-attachment: fixed;
-            background-repeat: round;
-            background-color: #303030; /* Красный фон */
-            color: #848484; /* Черный текст */
-        }
-        .navbar {
-            background-color: #000000; /* Черный фон для навигационной панели */
-        }
-        .btn-primary:hover {
-            background-color: #0040ae;
-        }
-        .post {
-
-            background-color: #1c1c1c; /* Цвет фона поста */
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-    .post:hover {
-        background-color: #1c1c1c; /* Цвет фона поста при наведении (оставляем тот же цвет) */
-    }
-    .post-link {
-        text-decoration: none; /* Убираем стандартное подчеркивание */
-        color: inherit; /* Наследуем цвет текста от родительского элемента (черный) */
-
-    }
-    .post-link:hover,
-    .post-link:active {
-        text-decoration: none;
-        color: #848484; /* Цвет при наведении и активации (черный) */
-    }
-    .ellipsis-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Максимальная ширина текста перед троеточиями */
-    }
-
-    </style>
+    <link href="templates/style.css" rel="stylesheet" >
 </head>
+{% include 'header.html' %}
 <body>
-    {% include 'header.html' %}
-
-
-
-    <!-- Основное содержание страницы -->
     <div class="container mt-4">
 
         <h1>Добро пожаловать на Souls of Stockholm</h1>
         <p>Здесь не салам, здесь здравствуйте!</p>
         <div>
             <form action="/post/create" method="GET" class="d-flex justify-content-center">
-                <button class="btn" style="background-color: #08de3a; margin-left: auto; margin-top: auto;">Создать пост</button>
+                <button class="btn btn1" style="">Создать пост</button>
         </div>
-        <!-- Список постов -->
         {% for p in posts %}
         <div class="post">
-            <a href="/post/{{ p[0] }}" class="post-link"> <!-- Здесь указываете ссылку на пост и добавляете класс "post-link" -->
+            <a href="/post/{{ p[0] }}" class="post-link">
                 <h2>{{ p[3] }}</h2>
                 <p class="ellipsis-text">{{ p[4] }}</p>
             </a>
         </div>
         {% endfor %}
-        <!-- Добавьте больше постов по аналогии -->
-
     </div>
 
-    <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

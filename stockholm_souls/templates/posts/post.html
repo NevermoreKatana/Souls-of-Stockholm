@@ -4,20 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пост</title>
-    <!-- Подключение Bootstrap CSS -->
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Дополнительные стили для красно-черных тона -->
-    <style>
-        body {
-            background-attachment: fixed;
-            background-repeat: round;
-            background-color: #303030; /* Красный фон */
-            color: #848484; /* Черный текст */
-        }
-        .navbar {
-            background-color: #000000; /* Черный фон для навигационной панели */
-        }
-    </style>
+    <link href="../templates/posts/style.css" rel="stylesheet" >
 </head>
 <body>
      {% include 'header.html' %}
@@ -26,9 +15,8 @@
         <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
     {% endif %}
 {% endwith %}
-    <!-- Основное содержание страницы -->
+
     <div class="container mt-4">
-        <!-- Здесь вы можете использовать параметры запроса (например, ID поста) для получения и отображения нужного поста -->
         <h1>{{ post[3] }}</h1>
         <h6>
             <a href="/profile/{{ post[1] }}">{{ post[2] }}</a>
@@ -37,14 +25,11 @@
 
             <h2>Комментарии</h2>
 
-
-        <!-- Список комментариев -->
        <div class="mt-4">
-            <ul style="list-style-type: none; padding: 0;">
-                <!-- Здесь вы можете вставить цикл, чтобы отобразить список комментариев к посту -->
+            <ul>
                 {% for c in comments %}
-                    <li style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <img src="../templates/images/main_bg.jpg" alt="Фото пользователя" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <li>
+                        <img src="../templates/images/main_bg.jpg" alt="Фото пользователя">
                         <div style="margin-left: 10px;">
                             <strong>{{c[4]}}</strong>
                             <br>
@@ -53,17 +38,14 @@
                     </li>
                 {% endfor %}
             </ul>
-                <!-- Добавьте больше комментариев по аналогии -->
             <form action="/post/{{ post[0] }}/comment" method="post">
             <div class="form-group">
                 <label for="comment">Добавить комментарий:</label>
-                <textarea class="form-control" id="comment" name="comment" rows="4" style="background-color: black" required></textarea>
+                <textarea class="form-control txt1" id="comment" name="comment" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Опубликовать комментарий</button>
         </form>
 
-
-    <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

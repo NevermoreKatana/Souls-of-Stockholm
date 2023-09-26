@@ -4,37 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Souls of Stockholm</title>
-    <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Дополнительные стили для красно-черных тона -->
-    <style>
-        body {
-            background-color: #303030; /* Красный фон */
-            color: #848484; /* Черный текст */
-        }
-        .navbar {
-            background-color: #000000; /* Черный фон для навигационной панели */
-        }
-        .btn-primary:hover{
-             background-color: #0040ae;
-        }
-    </style>
+   <link href="templates/style.css" rel="stylesheet">
 </head>
+{% include 'header.html' %}
 <body>
-    {% include 'header.html' %}
-    <!-- Основное содержание страницы -->
+
     <div class="container mt-4">
         <h1>Добро пожаловать на Souls of Stockholm </h1>
         <p>Здесь вы можете обсудить различные темы </p>
     </div>
         <h2>Список пользователей</h2>
-    <table class="table table-striped" style="color: #FF8000">
+    <table class="table table-striped tb1">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Username</th>
                 <th>Link</th>
-                <!-- Add more table headings as needed -->
             </tr>
         </thead>
         <tbody>
@@ -50,7 +36,6 @@
         </tbody>
     </table>
 </div>
-    <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
