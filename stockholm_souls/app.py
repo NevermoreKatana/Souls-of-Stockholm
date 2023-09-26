@@ -194,3 +194,8 @@ def show_post_api(jwt,post_id):
     if post_data:
         return jsonify(post_data)
     return jsonify({'denied': 'Такого поста нет'})
+
+
+@app.route('/docs', methods=['GET'])
+def show_docs():
+    return render_template('docs.html')
