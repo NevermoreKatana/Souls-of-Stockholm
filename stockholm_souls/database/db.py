@@ -265,3 +265,19 @@ def take_one_post_api(id):
             return result
     finally:
         release_connection(conn)
+
+
+def add_new_comment_api(jwt, post_id, content):
+    result = {}
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT user_id FROM users_secrets WHERE secret = %s", (jwt,))
+            user_id = cursor.fetchone()[0]
+            cursor.execute(f"SELECT username FROM users WHERE id = %s", (user_id,))
+            user_name = cursor.fetchone()[0]
+            cursor.execute(f"INSERT INTO comments (post_id, user_id, username, content) VALUES (%s,%s,%s,%s)", (post_id, user_id, user_name, content))
+            cursor.execute("COMMIT")
+            return {'success': 'Успех'}
+    finally:
+        release_connection(conn)

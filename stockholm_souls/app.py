@@ -18,7 +18,8 @@ from stockholm_souls.database.db import (verification,
                                          add_comments,
                                          add_new_post,
                                          take_jwt,
-                                         take_one_post_api)
+                                         take_one_post_api,
+                                         add_new_comment_api)
 from flask import (Flask,
                    render_template,
                    request,
@@ -157,6 +158,13 @@ def add_comment(post_id):
     flash('Войдите в аккаунт')
     return redirect(f'/post/{post_id}')
 
+@app.route('/<jwt>/post/<post_id>/comment', methods=['POST'])
+def add_comment_api(post_id, jwt):
+    data = request.get_json()
+    content = data['content']
+    errors = add_new_comment_api(jwt, post_id, content)
+    return jsonify(errors)
+
 
 @app.route('/a_api/login', methods=['POST'])
 def a_api_login():
@@ -179,7 +187,7 @@ def create_post():
     current_user = session.get('user')
     if current_user:
         post_name = request.form['name']
-        contet = request.form['contet']
+        contet = request.form['content']
         user_id = current_user['id']
         user_name = current_user['name']
         add_new_post(user_id, user_name,post_name,contet)
@@ -199,3 +207,5 @@ def show_post_api(jwt,post_id):
 @app.route('/docs', methods=['GET'])
 def show_docs():
     return render_template('docs.html')
+
+

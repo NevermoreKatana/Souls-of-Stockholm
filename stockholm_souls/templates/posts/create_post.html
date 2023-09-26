@@ -11,15 +11,15 @@
 <body>
     <div class="form-container">
         <h1 >Создание нового поста</h1>
-        <form>
+        <form action="/post/create/" method="post">
             <div class="form-group">
                 <label for="exampleFormControlInput1">Название поста</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Название поста">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Название поста" required>
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Содержание поста</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary submit-btn">Отправить</button>
         </form>
