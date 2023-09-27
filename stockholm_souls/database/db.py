@@ -12,17 +12,6 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 # Создаем пул соединений
 connection_pool = psycopg2.pool.ThreadedConnectionPool(minconn=0, maxconn=25, dsn=DATABASE_URL)
 
-checks = {
-    'success' : {
-        'answer': 'Проверка прошла успешно телеграмм успешно привязан к аккаунту',
-        'status_code': 'authorized'
-    },
-    'denied': {
-        'answer': 'Проверка провалена, телеграм не привязан к аккаунту',
-        'status_code': 'not authorized'
-    }
-}
-
 
 def get_connection():
     return connection_pool.getconn()
@@ -113,7 +102,6 @@ def create_new_user(name, passwd, country, gender, age, secret):
 
             cursor.execute("COMMIT")
     except:
-        print('jopa')
         cursor.execute("ROLLBACK")
     finally:
         release_connection(conn)
@@ -147,19 +135,7 @@ def take_user_secret_key(id):
         release_connection(conn)
 
 
-def check_valid_api_key(secret, tg_id):
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (secret,))
-            data = cursor.fetchall()
-            if data:
-                cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE user_id = %s", (tg_id, data[0][0]))
-                cursor.execute("COMMIT")
-                return checks['success']
-            return checks['denied']
-    finally:
-        release_connection(conn)
+
 
 
 def take_all_users():
@@ -195,17 +171,6 @@ def take_one_post(id):
         release_connection(conn)
 
 
-def take_posts_api(jwt):
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (jwt,))
-            data = cursor.fetchall()
-            if data:
-                cursor.execute(f"SELECT * FROM posts ORDER BY id ")
-                return cursor.fetchall()
-    finally:
-        release_connection(conn)
 
 
 def take_comments(post_id):
@@ -251,33 +216,5 @@ def take_jwt(username):
         release_connection(conn)
 
 
-def take_one_post_api(id):
-    result = {}
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM posts WHERE id = %s", (id,))
-            data = cursor.fetchall()
-            result['post_data'] = data
-            cursor.execute(f"SELECT * FROM comments WHERE post_id = %s", (id,))
-            data = cursor.fetchall()
-            result['comment'] = data
-            return result
-    finally:
-        release_connection(conn)
 
 
-def add_new_comment_api(jwt, post_id, content):
-    result = {}
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(f"SELECT user_id FROM users_secrets WHERE secret = %s", (jwt,))
-            user_id = cursor.fetchone()[0]
-            cursor.execute(f"SELECT username FROM users WHERE id = %s", (user_id,))
-            user_name = cursor.fetchone()[0]
-            cursor.execute(f"INSERT INTO comments (post_id, user_id, username, content) VALUES (%s,%s,%s,%s)", (post_id, user_id, user_name, content))
-            cursor.execute("COMMIT")
-            return {'success': 'Успех'}
-    finally:
-        release_connection(conn)

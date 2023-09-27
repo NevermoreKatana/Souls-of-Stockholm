@@ -8,18 +8,16 @@ from stockholm_souls.database.db import (verification,
                                          create_new_user,
                                          create_session_data,
                                          check_user,
-                                         check_valid_api_key,
                                          take_user_secret_key,
                                          take_all_users,
                                          take_all_posts,
                                          take_one_post,
-                                         take_posts_api,
                                          take_comments,
                                          add_comments,
                                          add_new_post,
                                          take_jwt,
-                                         take_one_post_api,
-                                         add_new_comment_api)
+                                         )
+from stockholm_souls.database.api_handler import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api
 from flask import (Flask,
                    render_template,
                    request,
@@ -116,7 +114,7 @@ def api_login():
     data = request.get_json()
     jwt_key = data['API_Key']
     tg_id = data['user_id']
-    check = check_valid_api_key(jwt_key, tg_id)
+    check = check_valid_jwt_key(jwt_key, tg_id)
     return jsonify(check)
 
 @app.route('/profiles', methods=['GET'])
@@ -162,8 +160,10 @@ def add_comment(post_id):
 def add_comment_api(post_id, jwt):
     data = request.get_json()
     content = data['content']
-    errors = add_new_comment_api(jwt, post_id, content)
-    return jsonify(errors)
+    errors = add_new_comment(jwt, post_id, content)
+    if errors:
+        return jsonify(errors)
+    return jsonify({'denied': 'Ошибка'})
 
 
 @app.route('/a_api/login', methods=['POST'])
