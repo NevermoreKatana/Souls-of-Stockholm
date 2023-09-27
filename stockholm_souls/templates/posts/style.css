@@ -50,3 +50,8 @@ img{
 .dv1 {
     margin-left: 10px;
 }
+pre{
+    color: #848484;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
