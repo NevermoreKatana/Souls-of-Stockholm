@@ -34,6 +34,7 @@ def add_new_comment(jwt, post_id, content):
         release_connection(conn)
 
 
+
 def check_valid_jwt_key(secret, tg_id):
     conn = get_connection()
     try:
