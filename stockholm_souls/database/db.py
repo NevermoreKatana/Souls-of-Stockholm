@@ -107,36 +107,23 @@ def create_new_user(name, passwd, country, gender, age, secret):
         release_connection(conn)
 
 
-def create_session_data(id):
+def create_session_data(username):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
+            cursor.execute(f"SELECT * FROM users WHERE username = %s", (id,))
             data = cursor.fetchall()[0]
-            secret_key = take_user_secret_key(id)
+            cursor.execute(f"SELECT secret FROM users_secrets WHERE user_id = %s", (id, ))
+            secret_key = cursor.fetchone()[0]
             result_data = {
                 'id': data[0],
                 'name': data[1],
                 'passwd': data[2],
-                'secret': secret_key[0][0]
+                'secret': secret_key
             }
             return result_data
     finally:
         release_connection(conn)
-
-def take_user_secret_key(id):
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute(f"SELECT secret FROM users_secrets WHERE id = %s", (id,))
-            info = cursor.fetchall()
-            return info
-    finally:
-        release_connection(conn)
-
-
-
-
 
 def take_all_users():
     conn = get_connection()

@@ -8,7 +8,6 @@ from stockholm_souls.database.db import (verification,
                                          create_new_user,
                                          create_session_data,
                                          check_user,
-                                         take_user_secret_key,
                                          take_all_users,
                                          take_all_posts,
                                          take_one_post,
@@ -111,7 +110,6 @@ def logout():
 
 
 
-
 @app.route('/profiles', methods=['GET'])
 def show_profiles():
     data = take_all_users()
@@ -133,8 +131,6 @@ def show_post(id):
     return render_template('/error/index.html')
 
 
-
-
 @app.route('/post/<post_id>/comment', methods=['POST'])
 def add_comment(post_id):
     content = request.form['comment']
@@ -144,8 +140,6 @@ def add_comment(post_id):
         return redirect(f'/post/{post_id}')
     flash('Войдите в аккаунт')
     return redirect(f'/post/{post_id}')
-
-
 
 
 @app.route('/post/create', methods=['GET'])
@@ -164,9 +158,6 @@ def create_post():
         return redirect('/')
     flash('Сначала войдите в аккаунт')
     return redirect('/post/create')
-
-
-
 
 
 @app.route('/docs', methods=['GET'])
