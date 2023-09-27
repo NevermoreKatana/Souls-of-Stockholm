@@ -1,7 +1,5 @@
         body {
             background-image: url(../images/profile_bg.png);
-            background-attachment: fixed;
-            background-repeat: round;
             background-color: #303030; /* Красный фон */
             color: #848484; /* Черный текст */
         }
