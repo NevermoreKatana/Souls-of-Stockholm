@@ -1,6 +1,8 @@
 from stockholm_souls.database.api_handler import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api,create_new_post,check_valid_jwt
 from stockholm_souls.database.db import (verification,
                                          take_jwt,
+                                         take_user_info,
+                                         take_all_users
                                          )
 from flask import (Flask,
                    render_template,
@@ -67,3 +69,19 @@ def create_post(jwt):
         return jsonify({'status': 'success'})
     else:
         return jsonify({'status': 'denied'})
+
+
+@api_blueprint.route('/<jwt>/profile/<id>', methods=['GET'])
+def show_profile(jwt, id):
+    if check_valid_jwt(jwt):
+        data = take_user_info(id)
+        return jsonify(data)
+    return jsonify({'status': 'denied'})
+
+
+@api_blueprint.route('/<jwt>/profiles', methods=['GET'])
+def show_profiles(jwt):
+    if check_valid_jwt(jwt):
+        data = take_all_users()
+        return jsonify(data)
+    return jsonify({'status': 'denied'})
