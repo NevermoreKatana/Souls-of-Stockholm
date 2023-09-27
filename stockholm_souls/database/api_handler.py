@@ -16,7 +16,7 @@ def add_new_comment(jwt, post_id, content):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute("BEGIN TRANSACTION")
+            cursor.execute("BEGIN")
 
             cursor.execute("""
                     INSERT INTO comments (post_id, user_id, username, content)
@@ -27,9 +27,7 @@ def add_new_comment(jwt, post_id, content):
                 """, (post_id, content, jwt))
 
             cursor.execute("COMMIT")
-            return {"success": "Успех"}
-    except Exception as e:
-        cursor.execute("ROLLBACK")
+
     finally:
         release_connection(conn)
 
@@ -78,3 +76,31 @@ def take_one_post_api(id):
         release_connection(conn)
 
 
+def create_new_post(jwt, post_name, content):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("BEGIN")
+            cursor.execute(f"SELECT user_id FROM users_secrets WHERE secret = %s", (jwt,))
+            id = cursor.fetchone()[0]
+            cursor.execute(f"SELECT username FROM users WHERE id = %s", (id,))
+            username = cursor.fetchone()[0]
+            cursor.execute(f"INSERT INTO posts (user_id, user_name, name, content) VALUES (%s,%s,%s,%s)", (id, username, post_name, content))
+            cursor.execute("COMMIT")
+            return '0'
+    finally:
+        release_connection(conn)
+
+
+def check_valid_jwt(jwt):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("BEGIN")
+            cursor.execute(f"SELECT * FROM users_secrets WHERE secret = %s", (jwt,))
+            data = cursor.fetchall()
+            if data:
+                return True
+            return False
+    finally:
+        release_connection(conn)

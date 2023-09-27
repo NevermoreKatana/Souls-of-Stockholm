@@ -1,4 +1,4 @@
-from stockholm_souls.database.api_handler import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api
+from stockholm_souls.database.api_handler import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api,create_new_post,check_valid_jwt
 from stockholm_souls.database.db import (verification,
                                          take_jwt,
                                          )
@@ -47,11 +47,23 @@ def api_posts(jwt):
     return jsonify({'denied': 'Отказано в доступе'})
 
 
-@api_blueprint.route('/<jwt>/post/<post_id>/comment', methods=['POST'])
+@api_blueprint.route('/<jwt>/post/<post_id>/comment/add', methods=['POST'])
 def add_comment_api(post_id, jwt):
     data = request.get_json()
     content = data['content']
-    errors = add_new_comment(jwt, post_id, content)
-    if errors:
-        return jsonify(errors)
+    if check_valid_jwt(jwt):
+        add_new_comment(jwt, post_id, content)
+        return jsonify({"success": "Успех"})
     return jsonify({'denied': 'Ошибка'})
+
+
+@api_blueprint.route('/<jwt>/post/create', methods=['POST'])
+def create_post(jwt):
+    data = request.get_json()
+    post_name = data['name']
+    content = data['content']
+    if check_valid_jwt(jwt):
+        create_new_post(jwt, post_name, content)
+        return jsonify({'status': 'success'})
+    else:
+        return jsonify({'status': 'denied'})
