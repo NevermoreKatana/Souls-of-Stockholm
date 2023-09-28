@@ -1,38 +1,41 @@
 body {
-    background-color: #303030; /* Красный фон */
-    color: #848484; /* Черный текст */
+    background-color: #303030;
+    color: #848484;
 }
 .post {
 
-    background-color: #1c1c1c; /* Цвет фона поста */
+    background-color: #1c1c1c;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 .post:hover {
-    background-color: #1c1c1c; /* Цвет фона поста при наведении (оставляем тот же цвет) */
+    background-color: #1c1c1c;
 }
 .post-link {
-    text-decoration: none; /* Убираем стандартное подчеркивание */
-    color: inherit; /* Наследуем цвет текста от родительского элемента (черный) */
+    text-decoration: none;
+    color: inherit;
 
 }
 .post-link:hover,
 .post-link:active {
     text-decoration: none;
-    color: #848484; /* Цвет при наведении и активации (черный) */
+    color: #848484;
 }
 .ellipsis-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Максимальная ширина текста перед троеточиями */
+    max-width: 100%;
 }
 .btn1{
-    background-color: #08de3a;
+    background-color: #00ba78;
     margin-left: auto;
     margin-top: auto;
+}
+.btn1:hover{
+    background-color: #00d88a;
 }
 .tb1{
     color: #FF8000;

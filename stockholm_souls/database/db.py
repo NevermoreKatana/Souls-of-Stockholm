@@ -107,11 +107,11 @@ def create_new_user(name, passwd, country, gender, age, secret):
         release_connection(conn)
 
 
-def create_session_data(username):
+def create_session_data(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE username = %s", (id,))
+            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
             data = cursor.fetchall()[0]
             cursor.execute(f"SELECT secret FROM users_secrets WHERE user_id = %s", (id, ))
             secret_key = cursor.fetchone()[0]
