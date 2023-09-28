@@ -8,7 +8,6 @@ from stockholm_souls.database.db import (verification,
                                          create_new_user,
                                          create_session_data,
                                          check_user,
-                                         take_all_users,
                                          take_all_posts,
                                          take_one_post,
                                          take_comments,
@@ -109,14 +108,6 @@ def logout():
     return redirect('/')
 
 
-
-@app.route('/profiles', methods=['GET'])
-def show_profiles():
-    data = take_all_users()
-    current_user = session.get('user')
-    return render_template('user/profiles.html', users=data, cu=current_user)
-
-
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('/error/index.html')
@@ -144,7 +135,8 @@ def add_comment(post_id):
 
 @app.route('/post/create', methods=['GET'])
 def create_post_form():
-    return render_template('posts/create_post.html')
+    current_user = session.get('user')
+    return render_template('posts/create_post.html', cu=current_user)
 
 @app.route('/post/create/', methods=['POST'])
 def create_post():
@@ -162,6 +154,7 @@ def create_post():
 
 @app.route('/docs', methods=['GET'])
 def show_docs():
-    return render_template('docs.html')
+    current_user = session.get('user')
+    return render_template('docs.html', cu=current_user)
 
 

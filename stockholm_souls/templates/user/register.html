@@ -1,17 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Registration</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="templates/user/css/style.css">
-    {% include 'header.html' %}
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="templates/user/style.css">
+</head>
+{% include 'header.html' %}
     {% with messages = get_flashed_messages() %}
         {% if messages[0] %}
             {% if messages[0].exist %}
@@ -21,61 +17,40 @@
                 {% endif %}
         {% endif %}
     {% endwith %}
-    </head>
-    <body class="img js-fullheight" style="background-image: url(templates/images/main_bg.jpg);">
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Create an Account</h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <div class="login-wrap p-0">
-                        <h3 class="mb-4 text-center">Register</h3>
-                        <form action="/register/" class="signin-form" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Username" required name="uname">
-                            </div>
-                            <div class="form-group">
-                                <input id="password-field" type="password" class="form-control" placeholder="Password" name="passwd" required>
-                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_passwd" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Age" required name="age">
-                            </div>
-                            <div class="form-group">
-                                <label for="gender">Gender:</label>
-                                <select class="form-control" id="gender" name="gender" >
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="country">Country:</label>
-                                <input type="text" class="form-control" placeholder="Country" id="country" name="country" required>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary-light submit px-3">Register</button>
-                            </div>
-                            <div class="form-group text-center">
-                                <span>Already have an account? <a href="/login" style="color: #fff">Login</a></span>
-                            </div>
-                        </form>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-5">
+                <h1 class="text-center">Регистрация</h1>
+                <form action="/register" method="post">
+                    <div class="form-group">
+                        <label for="username">Имя пользователя:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Подтвердите пароль:</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Пол:</label>
+                        <select class="form-control" id="gender" name="gender" required>
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                            <option value="other">Другой</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Страна:</label>
+                        <input type="text" class="form-control" id="country" name="country" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
             </div>
         </div>
-    </section>
-
-    <script src="templates/user/js/jquery.min.js"></script>
-    <script src="templates/user/js/popper.js"></script>
-    <script src="templates/user/js/bootstrap.min.js"></script>
-    <script src="templates/user/js/main.js"></script>
-    </body>
+    </div>
+</body>
 </html>

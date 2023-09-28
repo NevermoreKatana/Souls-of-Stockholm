@@ -1,17 +1,19 @@
-        body {
-            background-image: url(../images/profile_bg.png);
-            background-color: #303030; /* Красный фон */
-            color: #848484; /* Черный текст */
-        }
-        .navbar {
-            background-color: #000000; /* Черный фон для навигационной панели */
-        }
-        .btn-primary:hover{
-             background-color: #0040ae;
-        }
-            table {
-        table-layout: fixed;
-        }
-        td {
-            word-wrap: break-word; /* Или overflow-wrap: break-word; */
-        }
+body {
+    background-image: url(../images/profile_bg.png);
+    background-repeat: no-repeat;
+   background-size: cover;
+    background-color: #303030; /* Красный фон */
+    color: #848484; /* Черный текст */
+}
+.navbar {
+    background-color: #000000; /* Черный фон для навигационной панели */
+}
+.btn-primary:hover{
+     background-color: #0040ae;
+}
+    table {
+table-layout: fixed;
+}
+td {
+    word-wrap: break-word; /* Или overflow-wrap: break-word; */
+}

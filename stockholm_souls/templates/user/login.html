@@ -1,70 +1,36 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-  	<title>Login</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	<link rel="stylesheet" href="templates/user/css/style.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="templates/user/style.css">
+</head>
 {% include 'header.html' %}
-
 {% with messages = get_flashed_messages() %}
     {% if messages[0] %}
 <div class="alert alert-danger" role="alert">{{ messages[0].login }}</div>
     {% endif %}
 {% endwith %}
-	</head>
-	<body class="img js-fullheight" style="background-image: url(templates/images/main_bg.jpg);">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Enter the soul</h2>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Have an account?</h3>
-		      	<form action="/login/" class="signin-form" method="post">
-		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Username" required name="uname">
-		      		</div>
-	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" name="passwd" required>
-	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	            </div>
-	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary-light submit px-3">Sign In</button>
-	            </div>
-	            <div class="form-group d-md-flex">
-	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Remember Me
-									  <input type="checkbox" >
-									  <span class="checkmark" ></span>
-									</label>
-								</div>
-								<div class="w-50 text-md-right">
-									<a href="#" style="color: #fff">Forgot Password</a>
-								</div>
-	            </div>
-                    <div class="w-60 text-center">
-                        <a href="/register" style="color: #fff">Register</a>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-5">
+                <h1 class="text-center">Авторизация</h1>
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="username">Имя пользователя:</label>
+                        <input type="text" class="form-control" id="username" name="uname" required>
                     </div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<script src="templates/user/js/jquery.min.js"></script>
-  <script src="templates/user/js/popper.js"></script>
-  <script src="templates/user/js/bootstrap.min.js"></script>
-  <script src="templates/user/js/main.js"></script>
-    </body>
-
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" class="form-control" id="password" name="passwd" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-

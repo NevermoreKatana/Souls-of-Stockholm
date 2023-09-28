@@ -2,7 +2,6 @@ from stockholm_souls.database.api_handler import add_new_comment, check_valid_jw
 from stockholm_souls.database.db import (verification,
                                          take_jwt,
                                          take_user_info,
-                                         take_all_users
                                          )
 from flask import (Flask,
                    render_template,
@@ -79,9 +78,3 @@ def show_profile(jwt, id):
     return jsonify({'status': 'denied'})
 
 
-@api_blueprint.route('/<jwt>/profiles', methods=['GET'])
-def show_profiles(jwt):
-    if check_valid_jwt(jwt):
-        data = take_all_users()
-        return jsonify(data)
-    return jsonify({'status': 'denied'})
