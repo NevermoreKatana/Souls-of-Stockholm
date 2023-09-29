@@ -2,6 +2,7 @@ from stockholm_souls.database.db_api_handlers import add_new_comment, check_vali
 from stockholm_souls.database.db_user_nadlers import (verification,
                                                       take_user_info,
                                                       )
+from stockholm_souls.searching import search_posts_by_name
 from stockholm_souls.database.db_api_handlers import take_jwt
 from flask import (Flask,
                    render_template,
@@ -40,12 +41,18 @@ def show_post_api(jwt,post_id):
         return jsonify(post_data)
     return jsonify({'denied': 'Такого поста нет'})
 
-@api_blueprint.route('/<jwt>/posts', methods=['GET'])
+@api_blueprint.route('/<jwt>/posts', methods=['GET', 'POST'])
 def api_posts(jwt):
-    data = take_posts_api(jwt)
-    if data:
-        return jsonify(data)
-    return jsonify({'denied': 'Отказано в доступе'})
+    if request.method == 'GET':
+        posts = take_posts_api(jwt)
+    if request.method == 'POST':
+        posts = take_posts_api(jwt)
+        data = request.get_json()
+        query = data['query']
+        posts = search_posts_by_name(query, posts)
+    if posts:
+        return jsonify(posts)
+    return jsonify({'denied': 'Ошибка'})
 
 
 @api_blueprint.route('/<jwt>/post/<post_id>/comment/add', methods=['POST'])
