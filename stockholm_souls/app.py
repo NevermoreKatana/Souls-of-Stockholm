@@ -4,7 +4,7 @@ from stockholm_souls.database.db import take_all_posts
 from stockholm_souls.app_handlers.api_handlers import api_blueprint
 from stockholm_souls.app_handlers.user_handlers import users_blueprint
 from stockholm_souls.app_handlers.posts_handlers import posts_blueprint
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request
 from flask_jwt_extended import JWTManager
 
 dotenv.load_dotenv()
@@ -17,9 +17,14 @@ app.register_blueprint(posts_blueprint)
 jwt = JWTManager(app)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    posts_data = take_all_posts()
+    if request.method == 'POST':
+        search_query = request.form['query']
+        posts_data = take_all_posts()
+        posts_data = search_posts_by_name(search_query, posts_data)
+    elif request.method == 'GET':
+        posts_data = take_all_posts()
     current_user = session.get('user')
     if current_user:
         return render_template('index.html', cu = current_user, posts=posts_data)
@@ -37,3 +42,12 @@ def show_docs():
     return render_template('docs.html', cu=current_user)
 
 
+def search_posts_by_name(query, posts):
+    results = []
+
+    for post in posts:
+        post_name = post[3]
+        if query.lower() in post_name.lower():
+            results.append(post)
+
+    return results

@@ -191,7 +191,3 @@ def take_jwt(username):
             return cursor.fetchone()[0]
     finally:
         release_connection(conn)
-
-
-
-
