@@ -4,6 +4,7 @@ from stockholm_souls.database.db import take_all_posts
 from stockholm_souls.app_handlers.api_handlers import api_blueprint
 from stockholm_souls.app_handlers.user_handlers import users_blueprint
 from stockholm_souls.app_handlers.posts_handlers import posts_blueprint
+from stockholm_souls.searching import search_posts_by_name
 from flask import Flask, render_template, session, request
 from flask_jwt_extended import JWTManager
 
@@ -42,12 +43,3 @@ def show_docs():
     return render_template('docs.html', cu=current_user)
 
 
-def search_posts_by_name(query, posts):
-    results = []
-
-    for post in posts:
-        post_name = post[3]
-        if query.lower() in post_name.lower():
-            results.append(post)
-
-    return results
