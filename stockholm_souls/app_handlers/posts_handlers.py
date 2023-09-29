@@ -10,12 +10,11 @@ from flask import (Flask,
 
 posts_blueprint = Blueprint('posts', __name__)
 
-from stockholm_souls.database.db import (take_all_posts,
-                                         take_one_post,
-                                         take_comments,
-                                         add_comments,
-                                         add_new_post,
-                                         )
+from stockholm_souls.database.db_posts_handlers import (take_one_post,
+                                                        take_comments,
+                                                        add_comments,
+                                                        add_new_post,
+                                                        )
 
 
 @posts_blueprint.route('/post/<id>', methods=['GET'])

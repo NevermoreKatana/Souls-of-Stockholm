@@ -7,14 +7,14 @@ from flask import (Flask,
                    flash,
                    session, Blueprint)
 from stockholm_souls.database.validator import password_checker
-from stockholm_souls.database.db import (verification,
-                                         take_user_id,
-                                         take_user_info,
-                                         take_additional_user_info,
-                                         create_new_user,
-                                         create_session_data,
-                                         check_user,
-                                         )
+from stockholm_souls.database.db_user_nadlers import (verification,
+                                                      take_user_id,
+                                                      take_user_info,
+                                                      take_additional_user_info,
+                                                      create_new_user,
+                                                      create_session_data,
+                                                      check_user,
+                                                      )
 from flask_jwt_extended import (JWTManager,
                                 create_access_token,
                                 jwt_required,

@@ -1,6 +1,6 @@
 import os
 import dotenv
-from stockholm_souls.database.db import take_all_posts
+from stockholm_souls.database.db_posts_handlers import take_all_posts
 from stockholm_souls.app_handlers.api_handlers import api_blueprint
 from stockholm_souls.app_handlers.user_handlers import users_blueprint
 from stockholm_souls.app_handlers.posts_handlers import posts_blueprint

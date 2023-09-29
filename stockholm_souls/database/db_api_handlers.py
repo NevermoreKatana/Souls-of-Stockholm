@@ -1,4 +1,4 @@
-from stockholm_souls.database.db import get_connection, release_connection
+from stockholm_souls.database.db_conn import get_connection, release_connection
 
 checks = {
     'success' : {
@@ -102,5 +102,17 @@ def check_valid_jwt(jwt):
             if data:
                 return True
             return False
+    finally:
+        release_connection(conn)
+
+
+def take_jwt(username):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(f"SELECT id FROM users WHERE username = %s", (username,))
+            id = cursor.fetchone()[0]
+            cursor.execute(f"SELECT secret FROM users_secrets WHERE user_id = %s", (id,))
+            return cursor.fetchone()[0]
     finally:
         release_connection(conn)
