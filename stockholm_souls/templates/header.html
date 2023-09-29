@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+    @media (max-width: 100%) {
+}
     .navbar {
-        background-color: #272727; /* Черный фон для навигационной панели */
+        background-color: #272727;
         border-radius: 6px;
     }
     .btn-primary{
@@ -45,12 +47,10 @@
       font-size: 20px;
       color: #be290e;
     }
-    .ml{
-        padding-left: 360px;
-    }
-    .mr{
-       margin-right: 35px;
-    }
+    .ml-right {
+    margin-left: auto;
+    margin-right: 470px;
+}
     .mt-1{
         margin-top: 1.5em;!important;
     }
@@ -79,8 +79,8 @@
                     <a class="nav-link" href="/docs">Документация API</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml">
-                <li class="nav-item mr">
+            <ul class="navbar-nav ml-right">
+                <li class="nav-item">
                     <div class="d4">
                         <form action="/" method="post" style="display: flex;">
                             <input type="text" id="query" name="query" placeholder="Искать здесь...">
@@ -89,13 +89,13 @@
                     </div>
                 </li>
                 {% if cu %}
-                    <li class="nav-item mt-1">
+                    <li class="nav-item mt-1 ">
                         <form action="/logout" method="post" class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-light">Выйти</button>
                         </form>
                     </li>
                 {% else %}
-                    <li class="nav-item mt-1">
+                    <li class="nav-item  mt-1">
                         <form action="/login" method="get" class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">Войти</button>
                         </form>
