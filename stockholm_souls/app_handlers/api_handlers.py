@@ -1,19 +1,21 @@
-from stockholm_souls.database.db_api_handlers import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api,create_new_post,check_valid_jwt
+from stockholm_souls.database.db_api_handlers import (add_new_comment,
+                                                      check_valid_jwt_key,
+                                                      take_posts_api,
+                                                      take_one_post_api,
+                                                      create_new_post,
+                                                      check_valid_jwt)
 from stockholm_souls.database.db_user_nadlers import (verification,
                                                       take_user_info,
                                                       )
 from stockholm_souls.searching import search_posts_by_name
 from stockholm_souls.database.db_api_handlers import take_jwt
-from flask import (Flask,
-                   render_template,
-                   request,
-                   flash,
-                   redirect,
+from flask import (request,
                    jsonify,
-                   flash,
-                   session, Blueprint)
+                   Blueprint)
 
 api_blueprint = Blueprint('api', __name__)
+
+
 @api_blueprint.route('/api/login', methods=['POST'])
 def api_login():
     data = request.get_json()
@@ -34,12 +36,14 @@ def a_api_login():
     jwt = take_jwt(user_name)
     return {'login': 'success', "jwt": jwt}
 
+
 @api_blueprint.route('/<jwt>/posts/<post_id>', methods=['GET'])
-def show_post_api(jwt,post_id):
+def show_post_api(jwt, post_id):
     post_data = take_one_post_api(post_id)
     if post_data:
         return jsonify(post_data)
     return jsonify({'denied': 'Такого поста нет'})
+
 
 @api_blueprint.route('/<jwt>/posts', methods=['GET', 'POST'])
 def api_posts(jwt):
@@ -83,5 +87,3 @@ def show_profile(jwt, id):
         data = take_user_info(id)
         return jsonify(data)
     return jsonify({'status': 'denied'})
-
-

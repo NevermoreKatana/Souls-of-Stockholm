@@ -1,8 +1,9 @@
 from stockholm_souls.database.db_conn import get_connection, release_connection
 
 checks = {
-    'success' : {
-        'answer': 'Проверка прошла успешно телеграмм успешно привязан к аккаунту',
+    'success': {
+        'answer':
+            'Проверка прошла успешно телеграмм успешно привязан к аккаунту',
         'status_code': 'authorized'
     },
     'denied': {
@@ -32,15 +33,14 @@ def add_new_comment(jwt, post_id, content):
         release_connection(conn)
 
 
-
 def check_valid_jwt_key(secret, tg_id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (secret,))
+            cursor.execute("SELECT id FROM users_secrets WHERE secret = %s", (secret,))
             data = cursor.fetchall()
             if data:
-                cursor.execute(f"UPDATE users_secrets SET telegram_id = %s WHERE user_id = %s", (tg_id, data[0][0]))
+                cursor.execute("UPDATE users_secrets SET telegram_id = %s WHERE user_id = %s", (tg_id, data[0][0]))
                 cursor.execute("COMMIT")
                 return checks['success']
             return checks['denied']
@@ -52,23 +52,24 @@ def take_posts_api(jwt):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users_secrets WHERE secret = %s", (jwt,))
+            cursor.execute("SELECT id FROM users_secrets WHERE secret = %s", (jwt,))
             data = cursor.fetchall()
             if data:
-                cursor.execute(f"SELECT * FROM posts ORDER BY id ")
+                cursor.execute("SELECT * FROM posts ORDER BY id ")
                 return cursor.fetchall()
     finally:
         release_connection(conn)
+
 
 def take_one_post_api(id):
     result = {}
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM posts WHERE id = %s", (id,))
+            cursor.execute("SELECT * FROM posts WHERE id = %s", (id,))
             data = cursor.fetchall()
             result['post_data'] = data
-            cursor.execute(f"SELECT * FROM comments WHERE post_id = %s", (id,))
+            cursor.execute("SELECT * FROM comments WHERE post_id = %s", (id,))
             data = cursor.fetchall()
             result['comment'] = data
             return result
@@ -81,11 +82,11 @@ def create_new_post(jwt, post_name, content):
     try:
         with conn.cursor() as cursor:
             cursor.execute("BEGIN")
-            cursor.execute(f"SELECT user_id FROM users_secrets WHERE secret = %s", (jwt,))
+            cursor.execute("SELECT user_id FROM users_secrets WHERE secret = %s", (jwt,))
             id = cursor.fetchone()[0]
-            cursor.execute(f"SELECT username FROM users WHERE id = %s", (id,))
+            cursor.execute("SELECT username FROM users WHERE id = %s", (id,))
             username = cursor.fetchone()[0]
-            cursor.execute(f"INSERT INTO posts (user_id, user_name, name, content) VALUES (%s,%s,%s,%s)", (id, username, post_name, content))
+            cursor.execute("INSERT INTO posts (user_id, user_name, name, content) VALUES (%s,%s,%s,%s)", (id, username, post_name, content))
             cursor.execute("COMMIT")
             return '0'
     finally:
@@ -97,7 +98,7 @@ def check_valid_jwt(jwt):
     try:
         with conn.cursor() as cursor:
             cursor.execute("BEGIN")
-            cursor.execute(f"SELECT * FROM users_secrets WHERE secret = %s", (jwt,))
+            cursor.execute("SELECT * FROM users_secrets WHERE secret = %s", (jwt,))
             data = cursor.fetchall()
             if data:
                 return True
@@ -110,9 +111,9 @@ def take_jwt(username):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users WHERE username = %s", (username,))
+            cursor.execute("SELECT id FROM users WHERE username = %s", (username,))
             id = cursor.fetchone()[0]
-            cursor.execute(f"SELECT secret FROM users_secrets WHERE user_id = %s", (id,))
+            cursor.execute("SELECT secret FROM users_secrets WHERE user_id = %s", (id,))
             return cursor.fetchone()[0]
     finally:
         release_connection(conn)

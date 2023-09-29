@@ -1,13 +1,15 @@
 from stockholm_souls.database.db_conn import get_connection, release_connection
 from stockholm_souls.secrets import hash_passwd
 from stockholm_souls.database.validator import password_verification
+import datetime
+
 
 def verification(uname, passwd):
     errors = {}
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE username = %s", (uname,))
+            cursor.execute("SELECT * FROM users WHERE username = %s", (uname,))
             info = cursor.fetchall()
             if info:
                 salt = info[0][3]
@@ -24,31 +26,34 @@ def take_user_id(uname):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM users WHERE username = %s", (uname,))
+            cursor.execute("SELECT id FROM users WHERE username = %s", (uname,))
             id = cursor.fetchall()[0][0]
             return id
     finally:
         release_connection(conn)
 
+
 def take_user_info(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
+            cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
             info = cursor.fetchall()
             return info
     finally:
         release_connection(conn)
 
+
 def take_additional_user_info(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users_additionally WHERE id = %s", (id))
+            cursor.execute("SELECT * FROM users_additionally WHERE id = %s", (id))
             info = cursor.fetchall()
             return info
     finally:
         release_connection(conn)
+
 
 def create_new_user(name, passwd, country, gender, age, secret):
     conn = get_connection()
@@ -67,18 +72,19 @@ def create_new_user(name, passwd, country, gender, age, secret):
             cursor.execute("INSERT INTO users_secrets (user_id, secret) VALUES (%s, %s)", (user_id, secret))
 
             cursor.execute("COMMIT")
-    except:
+    except Exception:
         cursor.execute("ROLLBACK")
     finally:
         release_connection(conn)
+
 
 def create_session_data(id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = %s", (id,))
+            cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
             data = cursor.fetchall()[0]
-            cursor.execute(f"SELECT secret FROM users_secrets WHERE user_id = %s", (id, ))
+            cursor.execute("SELECT secret FROM users_secrets WHERE user_id = %s", (id, ))
             secret_key = cursor.fetchone()[0]
             result_data = {
                 'id': data[0],
@@ -95,7 +101,7 @@ def check_user(uname):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE username = %s", (uname,))
+            cursor.execute("SELECT * FROM users WHERE username = %s", (uname,))
             if cursor.fetchall():
                 return True
             return False

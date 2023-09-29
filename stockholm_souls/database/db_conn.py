@@ -1,6 +1,5 @@
 import psycopg2
 import psycopg2.pool
-import datetime
 import os
 import dotenv
 dotenv.load_dotenv()
@@ -16,6 +15,3 @@ def get_connection():
 
 def release_connection(conn):
     connection_pool.putconn(conn)
-
-
-

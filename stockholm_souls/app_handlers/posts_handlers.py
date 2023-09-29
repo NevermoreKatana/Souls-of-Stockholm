@@ -1,20 +1,15 @@
-from flask import (Flask,
-                   render_template,
+from flask import (render_template,
                    request,
-                   flash,
                    redirect,
-                   jsonify,
                    flash,
-                   session, Blueprint)
-
-
-posts_blueprint = Blueprint('posts', __name__)
-
+                   session,
+                   Blueprint)
 from stockholm_souls.database.db_posts_handlers import (take_one_post,
                                                         take_comments,
                                                         add_comments,
-                                                        add_new_post,
-                                                        )
+                                                        add_new_post)
+
+posts_blueprint = Blueprint('posts', __name__)
 
 
 @posts_blueprint.route('/post/<id>', methods=['GET'])
@@ -23,7 +18,10 @@ def show_post(id):
     comments_data = take_comments(id)
     current_user = session.get('user')
     if post_info:
-        return render_template('posts/post.html', post=post_info[0], cu=current_user, comments = comments_data)
+        return render_template('posts/post.html',
+                               post=post_info[0],
+                               cu=current_user,
+                               comments=comments_data)
     return render_template('/error/index.html')
 
 
@@ -43,6 +41,7 @@ def create_post_form():
     current_user = session.get('user')
     return render_template('posts/create_post.html', cu=current_user)
 
+
 @posts_blueprint.route('/post/create/', methods=['POST'])
 def create_post():
     current_user = session.get('user')
@@ -51,7 +50,7 @@ def create_post():
         contet = request.form['content']
         user_id = current_user['id']
         user_name = current_user['name']
-        add_new_post(user_id, user_name,post_name,contet)
+        add_new_post(user_id, user_name, post_name, contet)
         return redirect('/')
     flash('Сначала войдите в аккаунт')
     return redirect('/post/create')

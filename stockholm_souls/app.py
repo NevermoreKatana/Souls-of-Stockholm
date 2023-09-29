@@ -28,8 +28,11 @@ def index():
         posts_data = take_all_posts()
     current_user = session.get('user')
     if current_user:
-        return render_template('index.html', cu = current_user, posts=posts_data)
-    return render_template('index.html',posts=posts_data)
+        return render_template('index.html',
+                               cu=current_user,
+                               posts=posts_data)
+    return render_template('index.html',
+                           posts=posts_data)
 
 
 @app.errorhandler(404)
@@ -41,5 +44,3 @@ def page_not_found(error):
 def show_docs():
     current_user = session.get('user')
     return render_template('docs.html', cu=current_user)
-
-
