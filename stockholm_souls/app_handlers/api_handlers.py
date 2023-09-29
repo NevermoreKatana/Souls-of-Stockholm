@@ -1,8 +1,8 @@
 from stockholm_souls.database.db_api_handlers import add_new_comment, check_valid_jwt_key, take_posts_api, take_one_post_api,create_new_post,check_valid_jwt
-from stockholm_souls.database.db_conn import (verification,
-                                              take_jwt,
-                                              take_user_info,
-                                              )
+from stockholm_souls.database.db_user_nadlers import (verification,
+                                                      take_user_info,
+                                                      )
+from stockholm_souls.database.db_api_handlers import take_jwt
 from flask import (Flask,
                    render_template,
                    request,
