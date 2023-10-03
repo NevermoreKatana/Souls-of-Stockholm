@@ -6,6 +6,7 @@ from stockholm_souls.database.db_api_handlers import (add_new_comment,
                                                       check_valid_jwt)
 from stockholm_souls.database.db_user_nadlers import (verification,
                                                       take_user_info,
+                                                      take_additional_user_info
                                                       )
 from stockholm_souls.searching import search_posts_by_name
 from stockholm_souls.database.db_api_handlers import take_jwt
@@ -85,5 +86,6 @@ def create_post(jwt):
 def show_profile(jwt, id):
     if check_valid_jwt(jwt):
         data = take_user_info(id)
-        return jsonify(data)
+        add_data = take_additional_user_info(id)
+        return jsonify({'user': data, 'users_additionally': add_data})
     return jsonify({'status': 'denied'})
